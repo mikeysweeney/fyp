@@ -1,0 +1,112 @@
+<!--/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}-->
+  #Required {
+    margin: auto;
+    display: inline-block;
+    text-align: center;
+    float: right;
+    width: 10%;
+    padding: 8px;
+    border: 3px solid black;
+  }
+
+  #Prereqs {
+    margin: 0.25%;
+    display: block;
+    float: left;
+    width: 15%;
+    height: 375px;
+    padding: 0.25%;
+    border: 3px solid black;
+  }
+  html {
+    display: inline-table;
+    margin: auto;
+    height: 100%;
+  }
+
+  #SemesterBlock {
+    overflow: auto;
+    margin: 5%;
+    display: inline-block;
+    float: left;
+    width: 70%;
+    height: auto;
+    padding: 0.25%;
+  }
+
+
+  Semester {
+    top: 0;
+    overflow: auto;
+    margin: 0.5%;
+    display: inline-block;
+    width: 20%;
+    min-height: 170px;
+    padding: 3px;
+    border: 2px solid black;
+  }
+
+  #Info {
+    margin: 0.25%;
+    display: block;
+    float: left;
+    width: 15%;
+    height: 375px;
+    padding: 0.25%;
+    border: 3px solid black;
+    font-size:12px;
+    text-align: left;
+  }
+
+  *[draggable=true] {
+    margin: 0.2%;
+    display: inline-grid;
+    width: 100px;
+    height: 60px;
+    padding: 0.1%;
+    font-size:12px;
+  }
+
+  .title {
+    background-color:#3366ff;
+    text-align:center;
+    color:white;
+    padding: 2px 1px;
+    font-size:14px;
+
+  }
+  #ColorKey {
+    margin: 0.25%;
+    float: left;
+    display: table;
+    width: 8%;
+    height: auto;
+    padding: 0.25%;
+    border: 3px solid black;
+    font-size:12px;
+    text-align: left;
+  }
+  #titleKey {
+    text-align:center;
+    color:white;
+    padding: 2px 1px;
+    font-size:10px;
+  }
+  .keyBlock {
+    margin: 1%;
+    display: cell;
+    width: auto;
+    height: auto;
+    padding: 0.1%;
+    border: 1px solid black;
+    font-size:11px;
+  }
