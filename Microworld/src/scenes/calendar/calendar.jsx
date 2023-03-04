@@ -10,8 +10,8 @@ function Calendar() {
   }
 
   function dragStart(ev) {
-    ev.dataTransfer.effectAllowed = 'move';
-    ev.dataTransfer.setData("Text", ev.target.getAttribute('id'));
+    ev.dataTransfer.effectAllowed = "move";
+    ev.dataTransfer.setData("Text", ev.target.getAttribute("id"));
     ev.dataTransfer.setDragImage(ev.target, 0, 0);
   }
 
@@ -24,11 +24,18 @@ function Calendar() {
     var data = ev.dataTransfer.getData("text");
     var originalElement = document.getElementById(data);
     var cloneElement = originalElement.cloneNode(true);
+    cloneElement.addEventListener("dblclick", () => cloneElement.remove()); // add dblclick event listener
     cloneElement.removeAttribute("data-value"); // remove the data-value attribute from the clone
-    var imgValue = originalElement.getAttribute("data-value"); // get the value from the original element
-    if (imgValue) {
+    var imgValueKm = originalElement.getAttribute("data-value-km") || cloneElement.getAttribute("data-value-km"); // get the km value from the original element or the clone
+    var imgValueFreq = originalElement.getAttribute("data-value-freq") || cloneElement.getAttribute("data-value-freq"); // get the frequency value from the original element or the clone
+    if (originalElement.id === "Flight") {
       var totalCount = document.getElementById("totalCount");
-      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValue); // update the total count
+      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValueKm) * parseInt(imgValueFreq) * 10; // update the total count
+      setTotalCount(parseInt(totalCount.innerText));
+    } else if (originalElement.id === "Electric Car") {
+      totalCount = document.getElementById("totalCount");
+      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValueKm) * parseInt(imgValueFreq); // update the total count
+      setTotalCount(parseInt(totalCount.innerText));
     }
     ev.target.appendChild(cloneElement); // append the clone to the dropzone
   }
@@ -69,10 +76,23 @@ function Calendar() {
     );
   }
 
+  function Semester(props) {
+    return (
+      <div id={props.id} style={{ display: "flex", flexDirection: "column" }}>
+        <div className="title" style={{ flexGrow: 1 }}>{props.title}</div>
+        <div className="dropzone" onDrop={drop} onDragOver={allowDrop}></div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ color: "#3366ff", fontFamily: "arial" }} align="center">
       <h3>Year Transport Planner</h3>
-      <div>Total Count: <span id="totalCount">{totalCount}</span></div>
+      <div>
+        Total Count: <span id="totalCount">{totalCount}</span> out of 1000
+        <br />
+        <progress value={totalCount} max="1000"></progress>
+      </div>
       <SemesterBlock>
         <Semester id="jan" title="January" />
         <Semester id="feb" title="February" />
@@ -100,9 +120,11 @@ function Calendar() {
           alt=""
           onContextMenu={(e) => {
             e.preventDefault();
-            const value = window.prompt("Enter a value for Flight:");
-            if (value !== null) {
-              e.target.setAttribute("data-value", value);
+            const valueKm = window.prompt("Enter a value (in km) for Flight:");
+            const valueFreq = window.prompt("Enter a value (frequency) for Flight:");
+            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
+              e.target.setAttribute("data-value-km", valueKm);
+              e.target.setAttribute("data-value-freq", valueFreq);
             }
           }}
         />
@@ -117,9 +139,11 @@ function Calendar() {
           alt=""
           onContextMenu={(e) => {
             e.preventDefault();
-            const value = window.prompt("Enter a value for Electric Car:");
-            if (value !== null) {
-              e.target.setAttribute("data-value", value);
+            const valueKm = window.prompt("Enter a value (in km) for Flight:");
+            const valueFreq = window.prompt("Enter a value (frequency) for Flight:");
+            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
+              e.target.setAttribute("data-value-km", valueKm);
+              e.target.setAttribute("data-value-freq", valueFreq);
             }
           }}
           onDrop={(ev) => {
