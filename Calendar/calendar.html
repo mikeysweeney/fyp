@@ -1,55 +1,84 @@
 <!DOCTYPE HTML>
 <html>
-   <head>
-	   <!--written by P. Beuhler, J. Perez, J. Freeman, J. Goldsich -->
-    <link rel="stylesheet" href="calendar.css">
+
+<head>
+	<link rel="stylesheet" href="calendar.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="sql.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="calendar.js"></script>
-   </head>
-   <body>
-		<div style="color:#3366ff;font-family:arial;" align="center">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="calendar.js"></script>
+</head>
+
+<body>
+	<div style="color:#3366ff;font-family:arial;" align="center">
 		<h3>Year Transport Planner</h3>
 		<div class="w3-light-grey w3-round-xlarge">
-		<div class="w3-container w3-green w3-round-xlarge" style="width:25%">1500 / 7300</div>
+			<div class="w3-container w3-green w3-round-xlarge" style="width:25%">1500 / 7300</div>
 		</div>
-		<!-- <Info id = "Info" draggable="false"><div class = "title">Info</div><div class = "paragraph"></div></Info> -->
-    <div id = "ColorKey">
-      <div class = "title">Color Key</div>
-      <div id="green" draggable="false" class="keyBlock" style="background:PaleGreen">Within 2050 Goals</div>
-      <div id="wheat" draggable="false" class="keyBlock" style="background:Wheat">Within 2030 Goals</div>
-      <div id="gold" draggable="false" class="keyBlock" style="background:gold">Matching National Average</div>
-      <div id="DarkOrange" draggable="false" class="keyBlock" style="background:DarkOrange">Slightly Above National Average</div>
-	  <div id="pink" draggable="false" class="keyBlock" style="background:Pink">Much Worse National Average</div>
-      <div id="indianred" draggable="false" class="keyBlock" style="background:IndianRed">Terrible</div>
-    </div>
 
 		<!-- <Prereqs id="Prereqs" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">Prior Credits</div></Prereqs> -->
-		<div id = "SemesterBlock">
-			<Semester id="s1" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">January</div></Semester>
-			<Semester id="s2" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">February</div></Semester>
-	        <Semester id="s3" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">March</div></Semester>
-			<Semester id="s4" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">April</div></Semester>
-	        <Semester id="s5" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">May</div></Semester>
-			<Semester id="s6" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">June</div></Semester>
-	        <Semester id="s7" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">July</div></Semester>
-			<Semester id="s8" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">August </div></Semester>
-			<Semester id="s9" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">September</div></Semester>
-	        <Semester id="s10" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">October</div></Semester>
-			<Semester id="s11" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">November </div></Semester>
-			<Semester id="s11" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">December </div></Semester>
+		<div id="SemesterBlock">
+			<Semester id="s1" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">January</div>
+			</Semester>
+			<Semester id="s2" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">February</div>
+			</Semester>
+			<Semester id="s3" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">March</div>
+			</Semester>
+			<Semester id="s4" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">April</div>
+			</Semester>
+			<Semester id="s5" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">May</div>
+			</Semester>
+			<Semester id="s6" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">June</div>
+			</Semester>
+			<Semester id="s7" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">July</div>
+			</Semester>
+			<Semester id="s8" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">August </div>
+			</Semester>
+			<Semester id="s9" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">September</div>
+			</Semester>
+			<Semester id="s10" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">October</div>
+			</Semester>
+			<Semester id="s11" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">November </div>
+			</Semester>
+			<Semester id="s11" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="title">December </div>
+			</Semester>
 		</div>
-		<Required id="Required" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)"><div class = "title">Transport options </div>
-			
-			<img id="CHEM150" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)" ondragstart="drag(event)" title = "Flight" src="https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png"></img>
-			<img id="MATH125" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)" ondragstart="drag(event)" title = "Electric Car " src="https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png"></img>
-			<img id="AE245" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)" ondragstart="drag(event)" title = "Ferry" src="http://clipart-library.com/image_gallery/603313.png"></img>
-			<img id="KUCore1" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)" ondragstart="drag(event)" title = "Train" src="http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png"></img>
-			<img id="MATH126" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)" ondragstart="drag(event)" title = "Bus" src="http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png"></img>
-			<img id="KUCore2" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)" ondragstart="drag(event)" title = "Bicyle" src="http://www.clipartbest.com/cliparts/di8/Xpq/di8Xpq4LT.png"></img>
-			<img id="PHSX210" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)" ondragstart="drag(event)" title = "Petrol Car" src="http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png"></img>
+		<Required id="Required" draggable="false" ondrop="drop(event)" ondragover="allowDrop(event)">
+			<div class="title">Transport options </div>
+
+			<img id="CHEM150" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)"
+				ondragstart="drag(event)" title="Flight"
+				src="https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png"></img>
+			<img id="MATH125" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)"
+				ondragstart="drag(event)" title="Electric Car "
+				src="https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png"></img>
+			<img id="AE245" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)"
+				ondragstart="drag(event)" title="Ferry" src="http://clipart-library.com/image_gallery/603313.png"></img>
+			<img id="KUCore1" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)"
+				ondragstart="drag(event)" title="Train"
+				src="http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png"></img>
+			<img id="MATH126" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)"
+				ondragstart="drag(event)" title="Bus"
+				src="http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png"></img>
+			<img id="KUCore2" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)"
+				ondragstart="drag(event)" title="Bicyle"
+				src="http://www.clipartbest.com/cliparts/di8/Xpq/di8Xpq4LT.png"></img>
+			<img id="PHSX210" draggable="true" onmouseover="hover(this)" onmouseleave="leave(this)"
+				ondragstart="drag(event)" title="Petrol Car"
+				src="http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png"></img>
 		</Required>
-   </body>
+</body>
+
 </html>

@@ -41,10 +41,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
-            subtitle="New Public Transport Routes"
-            progress="0.75"
-            increase="+14%"
+            title="+6.1%"
+            subtitle="Rebound in transport emissions after COVID restrictions lifted in 2021"
+            progress="0.40"
+            increase="+40%"
             icon={
               <TrafficIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -60,9 +60,9 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="New EVs Sold"
-            progress="0.50"
+            title="47,000"
+            subtitle="Electric Vehicles (BEVs + PHEVs) on Irish roads in 2021"
+            progress="0.21"
             increase="+21%"
             icon={
               <PointOfSaleIcon
@@ -79,10 +79,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
-            subtitle="New Petrol Car Owners"
-            progress="0.30"
-            increase="+5%"
+            title="104,932"
+            subtitle="New Passenger Car Registrations in 2021"
+            progress="0.19"
+            increase="+18.8%"
             icon={
               <PersonAddIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -98,10 +98,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Traffic on Irish Roads"
-            progress="0.80"
-            increase="+43%"
+            title="2,187,365"
+            subtitle="Current number of passenger cars on Irish roads"
+            progress="0.72"
+            increase="72.5% are pre-2016"
             icon={
               <TrafficIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
