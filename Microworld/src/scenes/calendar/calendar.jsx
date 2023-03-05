@@ -1,9 +1,25 @@
 import React, { useState } from "react";
 import "./calendar.css";
 
+function Popup({ handleClose }) {
+  return (
+    <div className="popup">
+      <div className="popup-inner">
+        <h2>Welcome to Year Transport Planner!</h2>
+        <p>This is a game where you can plan your transportation for the year.</p>
+        <button onClick={handleClose}>OK</button>
+      </div>
+    </div>
+  );
+}
+
+
+
 function Calendar() {
-  const [imgValues, setImgValues] = useState({});
+  const [imgValues, setImgValues] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [showPopup, setShowPopup] = useState(true);
+
 
   function allowDrop(ev) {
     ev.preventDefault();
@@ -19,6 +35,18 @@ function Calendar() {
     ev.dataTransfer.setData("text", ev.target.id);
   }
 
+  function updateCount(originalElement, cloneElement, totalCount) {
+    var imgValueKm = originalElement.getAttribute("data-value-km") || cloneElement.getAttribute("data-value-km"); // get the km value from the original element or the clone
+    var imgValueFreq = originalElement.getAttribute("data-value-freq") || cloneElement.getAttribute("data-value-freq"); // get the frequency value from the original element or the clone
+    if (originalElement.id === "Flight") {
+      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValueKm) * parseInt(imgValueFreq) * 10; // update the total count
+      setTotalCount(parseInt(totalCount.innerText));
+    } else if (originalElement.id === "Electric Car") {
+      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValueKm) * parseInt(imgValueFreq); // update the total count
+      setTotalCount(parseInt(totalCount.innerText));
+    }
+  }
+
   function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
@@ -26,18 +54,23 @@ function Calendar() {
     var cloneElement = originalElement.cloneNode(true);
     cloneElement.addEventListener("dblclick", () => cloneElement.remove()); // add dblclick event listener
     cloneElement.removeAttribute("data-value"); // remove the data-value attribute from the clone
-    var imgValueKm = originalElement.getAttribute("data-value-km") || cloneElement.getAttribute("data-value-km"); // get the km value from the original element or the clone
-    var imgValueFreq = originalElement.getAttribute("data-value-freq") || cloneElement.getAttribute("data-value-freq"); // get the frequency value from the original element or the clone
-    if (originalElement.id === "Flight") {
-      var totalCount = document.getElementById("totalCount");
-      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValueKm) * parseInt(imgValueFreq) * 10; // update the total count
-      setTotalCount(parseInt(totalCount.innerText));
-    } else if (originalElement.id === "Electric Car") {
-      totalCount = document.getElementById("totalCount");
-      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValueKm) * parseInt(imgValueFreq); // update the total count
-      setTotalCount(parseInt(totalCount.innerText));
-    }
+    cloneElement.removeAttribute("draggable"); // remove the draggable attribute from the clone
     ev.target.appendChild(cloneElement); // append the clone to the dropzone
+
+    // check if there is enough space in the dropzone to add another image
+    var dropzone = ev.target;
+    var dropzoneHeight = dropzone.clientHeight;
+    var dropzoneScrollHeight = dropzone.scrollHeight;
+    if (dropzoneScrollHeight > dropzoneHeight) {
+      dropzone.classList.add("extended-dropzone"); // add CSS class to extend dropzone
+    }
+
+    updateCount(originalElement, cloneElement, document.getElementById("totalCount"));
+
+    // Make the cloned image draggable in the drop zone
+    cloneElement.setAttribute("draggable", "true");
+    cloneElement.addEventListener("dragstart", dragStart);
+    cloneElement.addEventListener("drag", drag);
   }
 
   function hover(element) {
@@ -71,23 +104,18 @@ function Calendar() {
     return (
       <div id={props.id} style={{ display: "flex", flexDirection: "column" }}>
         <div className="title" style={{ flexGrow: 1 }}>{props.title}</div>
-        <div className="dropzone" onDrop={drop} onDragOver={allowDrop}></div>
-      </div>
-    );
-  }
-
-  function Semester(props) {
-    return (
-      <div id={props.id} style={{ display: "flex", flexDirection: "column" }}>
-        <div className="title" style={{ flexGrow: 1 }}>{props.title}</div>
-        <div className="dropzone" onDrop={drop} onDragOver={allowDrop}></div>
+        <div className="dropzone" onDrop={drop} onDragOver={allowDrop} style={{ resize: 'both', overflow: 'auto' }}></div>
       </div>
     );
   }
 
   return (
     <div style={{ color: "#3366ff", fontFamily: "arial" }} align="center">
-      <h3>Year Transport Planner</h3>
+      {showPopup && (
+        <div className="popup-overlay">
+          <Popup handleClose={() => setShowPopup(false)} />
+        </div>
+      )}
       <div>
         Total Count: <span id="totalCount">{totalCount}</span> out of 1000
         <br />
@@ -107,8 +135,13 @@ function Calendar() {
         <Semester id="nov" title="November" />
         <Semester id="dec" title="December" />
       </SemesterBlock>
-      <div id="Required" draggable="false" onDrop={drop} onDragOver={allowDrop}>
+      <div id="Required" draggable="false" onDrop={drop} onDragOver={allowDrop} style={{ resize: 'both', overflow: 'auto' }}>
         <div className="title">Transport options</div>
+        {imgValues.map((img, index) => (
+          <div key={index}>
+            {img}
+          </div>
+        ))}
         <img
           id="Flight"
           draggable="true"
@@ -163,7 +196,7 @@ function Calendar() {
         />
       </div>
 
-    </div>
+    </div >
   );
 }
 
