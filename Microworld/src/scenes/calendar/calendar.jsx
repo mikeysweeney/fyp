@@ -74,10 +74,12 @@ function Calendar() {
   }
 
   function hover(element) {
+    element.classList.add('shake');
     element.style.opacity = "0.7";
   }
 
   function leave(element) {
+    element.classList.remove('shake');
     element.style.opacity = "1.0";
   }
 
