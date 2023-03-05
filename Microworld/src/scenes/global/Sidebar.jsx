@@ -100,7 +100,7 @@ const Sidebar = () => {
                 >
                   Michael Sweeney
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
+                <Typography variant="h5" color={colors.blueAccent[500]}>
                   4th Year Project
                 </Typography>
               </Box>
@@ -123,13 +123,6 @@ const Sidebar = () => {
               Pages
             </Typography>
             <Item
-              title="Questionnaire"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
               title="2023 Calendar"
               to="/calendar"
               icon={<CalendarTodayOutlinedIcon />}
@@ -138,8 +131,15 @@ const Sidebar = () => {
             />
             <Item
               title="2030 Calendar"
-              to="/calendar"
+              to="/calendar2030"
               icon={<CalendarTodayOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Questionnaire"
+              to="/form"
+              icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

@@ -1,0 +1,236 @@
+/* Prevent the text contents of draggable elements from being selectable. */
+/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+.dropzone {
+  border: 2px dashed #cccccc;
+  min-height: 200px;
+  margin-top: 0px;
+}
+
+.progress {
+  height: 20px;
+  margin-bottom: 20px;
+  color: #c51212;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.progress-bar {
+  float: left;
+  width: 0%;
+  height: 100%;
+  font-size: 12px;
+  line-height: 20px;
+  color: #c51212;
+  text-align: center;
+  background-color: #337ab7;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  transition: width 0.6s ease;
+}
+
+
+#Required {
+  margin: auto;
+  display: inline-block;
+  text-align: center;
+  float: right;
+  width: 10%;
+  padding: 8px;
+  border: 3px solid black;
+}
+
+#Prereqs {
+  margin: 0.25%;
+  display: block;
+  float: left;
+  width: 15%;
+  height: 375px;
+  padding: 0.25%;
+  border: 3px solid black;
+}
+
+.popup-overlay {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup {
+  position: relative;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-inner {
+  max-width: 400px;
+  text-align: center;
+}
+
+.popup button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #3366ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: #3355cc;
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-5px, 0);
+  }
+
+  20% {
+    transform: translate(5px, 0);
+  }
+
+  30% {
+    transform: translate(-5px, 0);
+  }
+
+  40% {
+    transform: translate(5px, 0);
+  }
+
+  50% {
+    transform: translate(-5px, 0);
+  }
+
+  60% {
+    transform: translate(5px, 0);
+  }
+
+  70% {
+    transform: translate(-5px, 0);
+  }
+
+  80% {
+    transform: translate(5px, 0);
+  }
+
+  90% {
+    transform: translate(-5px, 0);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+html {
+  display: inline-table;
+  margin: auto;
+  height: 100%;
+}
+
+#SemesterBlock {
+  overflow: auto;
+  margin: 5%;
+  display: inline-block;
+  float: left;
+  width: 80%;
+  height: auto;
+  padding: 0.25%;
+}
+
+
+.Semester {
+  top: 0;
+  overflow: auto;
+  margin: 0.5%;
+  display: inline-block;
+  width: 20%;
+  min-height: 170px;
+  padding: 3px;
+  border: 2px solid black;
+}
+
+#Info {
+  margin: 0.25%;
+  display: block;
+  float: left;
+  width: 15%;
+  height: 375px;
+  padding: 0.25%;
+  border: 3px solid black;
+  font-size: 12px;
+  text-align: left;
+}
+
+*[draggable=true] {
+  margin: 0.2%;
+  display: inline-grid;
+  width: 100px;
+  height: 60px;
+  padding: 0.1%;
+  font-size: 12px;
+}
+
+.title {
+  background-color: #3366ff;
+  text-align: center;
+  color: white;
+  padding: 2px 1px;
+  font-size: 14px;
+}
+
+#ColorKey {
+  margin: 0.25%;
+  float: left;
+  display: table;
+  width: 8%;
+  height: auto;
+  padding: 0.25%;
+  border: 3px solid black;
+  font-size: 12px;
+  text-align: left;
+}
+
+#titleKey {
+  text-align: center;
+  color: white;
+  padding: 2px 1px;
+  font-size: 10px;
+}
+
+.keyBlock {
+  margin: 1%;
+  display: cell;
+  width: auto;
+  height: auto;
+  padding: 0.1%;
+  border: 1px solid black;
+  font-size: 11px;
+}
