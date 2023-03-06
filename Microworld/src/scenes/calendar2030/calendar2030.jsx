@@ -1,50 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./calendar2030.css";
 
 function Popup({ handleClose }) {
   return (
     <div className="popup">
       <div className="popup-inner">
-        <h2>Welcome to Year Transport Planner 2030!</h2>
-        <p>This is a game where you can plan your transportation for the year.</p>
+        <h2>Welcome to Year Transport Planner!</h2>
+        <p>This is a game where you can plan your transportation for the year. 2030</p>
         <button onClick={handleClose}>OK</button>
       </div>
     </div>
   );
 }
 
-
-
 function Calendar2030() {
+
   const [imgValues, setImgValues] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(1);
   const [showPopup, setShowPopup] = useState(true);
 
+  useEffect(() => {
+    localStorage.setItem("imgValues", JSON.stringify(imgValues));
+  }, [imgValues]);
+
+  useEffect(() => {
+    localStorage.setItem("totalCount", JSON.stringify(totalCount));
+  }, [totalCount]);
+
+
+  useEffect(() => {
+    const storedImgValues = localStorage.getItem("imgValues");
+    if (storedImgValues) {
+      setImgValues(JSON.parse(storedImgValues));
+    }
+    const storedtotalCount = localStorage.getItem("totalCount");
+    if (storedtotalCount) {
+      setTotalCount(JSON.parse(storedtotalCount));
+    }
+  }, []);
 
   function allowDrop(ev) {
     ev.preventDefault();
+    console.log(ev.target + "allowDrop");
   }
 
   function dragStart(ev) {
     ev.dataTransfer.effectAllowed = "move";
     ev.dataTransfer.setData("Text", ev.target.getAttribute("id"));
     ev.dataTransfer.setDragImage(ev.target, 0, 0);
+    console.log(ev.dataTransfer.effectAllowed + "dragStart" + ev.dataTransfer.setData("Text", ev.target.getAttribute("id")));
   }
 
   function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
-  }
-
-  function updateCount(originalElement, cloneElement, totalCount) {
-    var imgValueKm = originalElement.getAttribute("data-value-km") || cloneElement.getAttribute("data-value-km"); // get the km value from the original element or the clone
-    var imgValueFreq = originalElement.getAttribute("data-value-freq") || cloneElement.getAttribute("data-value-freq"); // get the frequency value from the original element or the clone
-    if (originalElement.id === "Flight") {
-      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValueKm) * parseInt(imgValueFreq) * 10; // update the total count
-      setTotalCount(parseInt(totalCount.innerText));
-    } else if (originalElement.id === "Electric Car") {
-      totalCount.innerText = parseInt(totalCount.innerText) + parseInt(imgValueKm) * parseInt(imgValueFreq); // update the total count
-      setTotalCount(parseInt(totalCount.innerText));
-    }
   }
 
   function drop(ev) {
@@ -52,10 +60,39 @@ function Calendar2030() {
     var data = ev.dataTransfer.getData("text");
     var originalElement = document.getElementById(data);
     var cloneElement = originalElement.cloneNode(true);
-    cloneElement.addEventListener("dblclick", () => cloneElement.remove()); // add dblclick event listener
-    cloneElement.removeAttribute("data-value"); // remove the data-value attribute from the clone
-    cloneElement.removeAttribute("draggable"); // remove the draggable attribute from the clone
+    cloneElement.addEventListener("dblclick", () =>
+      cloneElement.remove()
+    ); // add dblclick event listener
+
+    // set the src attribute for the cloned element
+    cloneElement.setAttribute("src", originalElement.getAttribute("src"));
+
+    console.log(originalElement);
+    console.log(cloneElement);
     ev.target.appendChild(cloneElement); // append the clone to the dropzone
+    console.log(ev.target.appendChild(cloneElement));
+
+    var imgValueKm = originalElement.getAttribute("data-value-km");
+    var imgValueFreq = originalElement.getAttribute("data-value-freq");
+    console.log(imgValueKm);
+    console.log(imgValueFreq);
+    console.log(originalElement.getAttribute("c02value"))
+    console.log(originalElement.getAttribute("c02value") === "0")
+    if (originalElement.getAttribute("c02value") === "0") {
+      setTotalCount(prevCount =>
+        parseInt(prevCount) +
+        parseInt(imgValueKm) *
+        parseInt(imgValueFreq) *
+        10 // update the total count
+      );
+    } else if (originalElement.getAttribute("c02value") === "1") {
+      setTotalCount(prevCount =>
+        parseInt(prevCount) +
+        parseInt(imgValueKm) *
+        parseInt(imgValueFreq) // update the total count
+      );
+    }
+
 
     // check if there is enough space in the dropzone to add another image
     var dropzone = ev.target;
@@ -65,13 +102,12 @@ function Calendar2030() {
       dropzone.classList.add("extended-dropzone"); // add CSS class to extend dropzone
     }
 
-    updateCount(originalElement, cloneElement, document.getElementById("totalCount"));
-
     // Make the cloned image draggable in the drop zone
     cloneElement.setAttribute("draggable", "true");
     cloneElement.addEventListener("dragstart", dragStart);
     cloneElement.addEventListener("drag", drag);
   }
+
 
   function hover(element) {
     element.classList.add('shake');
@@ -81,17 +117,6 @@ function Calendar2030() {
   function leave(element) {
     element.classList.remove('shake');
     element.style.opacity = "1.0";
-  }
-
-  function handleContextMenu(e, imgId) {
-    e.preventDefault();
-    const imgValue = prompt("Enter value for image:");
-    if (imgValue) {
-      setImgValues((prevImgValues) => ({
-        ...prevImgValues,
-        [imgId]: imgValue,
-      }));
-    }
   }
 
   function SemesterBlock(props) {
@@ -139,61 +164,54 @@ function Calendar2030() {
       </SemesterBlock>
       <div id="Required" draggable="false" onDrop={drop} onDragOver={allowDrop} style={{ resize: 'both', overflow: 'auto' }}>
         <div className="title">Transport options</div>
-        {imgValues.map((img, index) => (
-          <div key={index}>
-            {img}
-          </div>
-        ))}
         <img
           id="Flight"
+          c02value="0"
           draggable="true"
           onMouseOver={(e) => hover(e.target)}
           onMouseLeave={(e) => leave(e.target)}
           onDragStart={dragStart}
-          title="Flight"
+          title="Flight1"
           src="https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png"
+          data-value-km="0"
+          data-value-freq="0"
           alt=""
           onContextMenu={(e) => {
             e.preventDefault();
+            const newName = window.prompt("Enter a name for this flight:");
             const valueKm = window.prompt("Enter a value (in km) for Flight:");
             const valueFreq = window.prompt("Enter a value (frequency) for Flight:");
             if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
               e.target.setAttribute("data-value-km", valueKm);
               e.target.setAttribute("data-value-freq", valueFreq);
+              e.target.setAttribute("title", newName);
+              e.target.setAttribute("id", newName);
             }
           }}
         />
         <img
           id="Electric Car"
+          c02value="1"
           draggable="true"
           onMouseOver={(e) => hover(e.target)}
           onMouseLeave={(e) => leave(e.target)}
           onDragStart={dragStart}
           title="Electric Car"
           src="https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png"
+          data-value-km="0"
+          data-value-freq="0"
           alt=""
           onContextMenu={(e) => {
             e.preventDefault();
+            const newName = window.prompt("Enter a name for this flight:");
             const valueKm = window.prompt("Enter a value (in km) for Flight:");
             const valueFreq = window.prompt("Enter a value (frequency) for Flight:");
             if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
               e.target.setAttribute("data-value-km", valueKm);
               e.target.setAttribute("data-value-freq", valueFreq);
+              e.target.setAttribute("title", newName);
+              e.target.setAttribute("id", newName);
             }
-          }}
-          onDrop={(ev) => {
-            ev.preventDefault();
-            const imgId = ev.dataTransfer.getData("Text");
-            const imgValue = ev.target.getAttribute("data-value");
-            const totalCountElement = document.getElementById("totalCount");
-            let totalCount = parseInt(totalCountElement.textContent);
-            totalCount += parseInt(imgValue);
-            totalCountElement.textContent = totalCount;
-            const originalElement = document.getElementById(imgId);
-            const cloneElement = originalElement.cloneNode(true);
-            cloneElement.removeAttribute("id");
-            ev.target.appendChild(cloneElement);
-
           }}
         />
       </div>
