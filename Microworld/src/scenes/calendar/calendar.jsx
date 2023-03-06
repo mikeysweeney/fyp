@@ -14,6 +14,7 @@ function Popup({ handleClose }) {
 }
 
 function Calendar() {
+  let totalCounttest = 0;
 
   const [imgValues, setImgValues] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -60,37 +61,25 @@ function Calendar() {
     var data = ev.dataTransfer.getData("text");
     var originalElement = document.getElementById(data);
     var cloneElement = originalElement.cloneNode(true);
+    cloneElement.setAttribute("src", originalElement.getAttribute("src")); // set the src attribute for the cloned element
+
     cloneElement.addEventListener("dblclick", () =>
       cloneElement.remove()
     ); // add dblclick event listener
 
     // set the src attribute for the cloned element
-    cloneElement.setAttribute("src", originalElement.getAttribute("src"));
 
-    //console.log(originalElement);
-    //console.log(cloneElement);
     ev.target.appendChild(cloneElement); // append the clone to the dropzone
-    //console.log(ev.target.appendChild(cloneElement));
 
     var imgValueKm = originalElement.getAttribute("data-value-km");
     var imgValueFreq = originalElement.getAttribute("data-value-freq");
-    console.log(imgValueKm);
-    console.log(imgValueFreq);
-    //console.log(originalElement.getAttribute("c02value"))
-    //console.log(originalElement.getAttribute("c02value") === "0")
     if (originalElement.getAttribute("c02value") === "0") {
-      setTotalCount(prevCount =>
-        parseInt(prevCount) +
-        parseInt(imgValueKm) *
-        parseInt(imgValueFreq) *
-        10 // update the total count
-      );
+      totalCounttest = totalCounttest + imgValueKm * imgValueFreq * 0.101
+      console.log("Total CO2 emissions :" + totalCounttest);
+
     } else if (originalElement.getAttribute("c02value") === "1") {
-      setTotalCount(prevCount =>
-        parseInt(prevCount) +
-        parseInt(imgValueKm) *
-        parseInt(imgValueFreq) // update the total count
-      );
+      totalCounttest = totalCounttest + imgValueKm * imgValueFreq * 0.3485
+      console.log("Total CO2 emissions :" + totalCounttest);
     }
 
 
@@ -144,9 +133,9 @@ function Calendar() {
         </div>
       )}
       <div>
-        Total Count: <span id="totalCount">{totalCount}</span> out of 1000
+        Total CO2 emissions : <span id="totalCount">{totalCounttest}</span> out of the national average 2500kg per person per year
         <br />
-        <progress value={totalCount} max="1000"></progress>
+        <progress value={totalCount} max="2500"></progress>
       </div>
       <SemesterBlock>
         <Semester id="jan" title="January" />
