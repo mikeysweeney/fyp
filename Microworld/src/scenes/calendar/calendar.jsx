@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./calendar.css";
 
 function Popup({ handleClose }) {
   return (
     <div className="popup">
       <div className="popup-inner">
-        <h2>Welcome to Year Transport Planner!</h2>
-        <p>This is a game where you can plan your transportation for the year.</p>
+        <h2>Welcome to Transport Planner Part 1 </h2>
+        <p>This is a game where you can plan your transportation for the year ahead to get an accurate evaluation of your C02 emissions .</p>
+        <p>Please be as accurate as possible by looking up distances online and being accurate on your monthly decisions</p>
         <button onClick={handleClose}>OK</button>
       </div>
     </div>
@@ -14,42 +15,19 @@ function Popup({ handleClose }) {
 }
 
 function Calendar() {
-  let totalCounttest = 0;
-
-  const [imgValues, setImgValues] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const totalCountRef = useRef(0);
   const [showPopup, setShowPopup] = useState(true);
 
-  useEffect(() => {
-    localStorage.setItem("imgValues", JSON.stringify(imgValues));
-  }, [imgValues]);
-
-  useEffect(() => {
-    localStorage.setItem("totalCount", JSON.stringify(totalCount));
-  }, [totalCount]);
-
-
-  useEffect(() => {
-    const storedImgValues = localStorage.getItem("imgValues");
-    if (storedImgValues) {
-      setImgValues(JSON.parse(storedImgValues));
-    }
-    const storedtotalCount = localStorage.getItem("totalCount");
-    if (storedtotalCount) {
-      setTotalCount(JSON.parse(storedtotalCount));
-    }
-  }, []);
 
   function allowDrop(ev) {
     ev.preventDefault();
-    //console.log(ev.target + "allowDrop");
   }
 
   function dragStart(ev) {
     ev.dataTransfer.effectAllowed = "move";
     ev.dataTransfer.setData("Text", ev.target.getAttribute("id"));
     ev.dataTransfer.setDragImage(ev.target, 0, 0);
-    //console.log(ev.dataTransfer.effectAllowed + "dragStart" + ev.dataTransfer.setData("Text", ev.target.getAttribute("id")));
   }
 
   function drag(ev) {
@@ -61,34 +39,36 @@ function Calendar() {
     var data = ev.dataTransfer.getData("text");
     var originalElement = document.getElementById(data);
     var cloneElement = originalElement.cloneNode(true);
-    cloneElement.setAttribute("src", originalElement.getAttribute("src")); // set the src attribute for the cloned element
+    cloneElement.setAttribute("src", originalElement.getAttribute("src"));
 
     cloneElement.addEventListener("dblclick", () =>
       cloneElement.remove()
     ); // add dblclick event listener
 
-    // set the src attribute for the cloned element
-
-    ev.target.appendChild(cloneElement); // append the clone to the dropzone
+    ev.target.appendChild(cloneElement);
+    console.log(ev.target)
 
     var imgValueKm = originalElement.getAttribute("data-value-km");
     var imgValueFreq = originalElement.getAttribute("data-value-freq");
     if (originalElement.getAttribute("c02value") === "0") {
-      totalCounttest = totalCounttest + imgValueKm * imgValueFreq * 0.101
-      console.log("Total CO2 emissions :" + totalCounttest);
-
+      setTotalCount(prevTotalCount => {
+        totalCountRef.current = parseFloat(prevTotalCount) + parseFloat(imgValueKm) * parseFloat(imgValueFreq) * 0.101;
+        console.log("Total CO2 emissions :" + totalCountRef.current);
+        return totalCountRef.current;
+      });
     } else if (originalElement.getAttribute("c02value") === "1") {
-      totalCounttest = totalCounttest + imgValueKm * imgValueFreq * 0.3485
-      console.log("Total CO2 emissions :" + totalCounttest);
+      setTotalCount(prevTotalCount => {
+        totalCountRef.current = parseFloat(prevTotalCount) + parseFloat(imgValueKm) * parseFloat(imgValueFreq) * 0.3485;
+        console.log("Total CO2 emissions :" + totalCountRef.current);
+        return totalCountRef.current;
+      });
     }
 
-
-    // check if there is enough space in the dropzone to add another image
     var dropzone = ev.target;
     var dropzoneHeight = dropzone.clientHeight;
     var dropzoneScrollHeight = dropzone.scrollHeight;
     if (dropzoneScrollHeight > dropzoneHeight) {
-      dropzone.classList.add("extended-dropzone"); // add CSS class to extend dropzone
+      dropzone.classList.add("extended-dropzone");
     }
 
     // Make the cloned image draggable in the drop zone
@@ -96,7 +76,6 @@ function Calendar() {
     cloneElement.addEventListener("dragstart", dragStart);
     cloneElement.addEventListener("drag", drag);
   }
-
 
   function hover(element) {
     element.classList.add('shake');
@@ -107,6 +86,7 @@ function Calendar() {
     element.classList.remove('shake');
     element.style.opacity = "1.0";
   }
+
 
   function SemesterBlock(props) {
     return (
@@ -125,6 +105,13 @@ function Calendar() {
     );
   }
 
+  useEffect(() => {
+    const totalCountElement = document.getElementById("totalCount");
+    totalCountElement.innerText = totalCount;
+    console.log("Total CO2 emissions use Effect :" + totalCount);
+    console.log("Total CO2 emissions use Effect 2 :" + totalCountElement.innerText);
+  }, [totalCount]);
+
   return (
     <div style={{ color: "#3366ff", fontFamily: "arial" }} align="center">
       {showPopup && (
@@ -133,7 +120,7 @@ function Calendar() {
         </div>
       )}
       <div>
-        Total CO2 emissions : <span id="totalCount">{totalCounttest}</span> out of the national average 2500kg per person per year
+        Total CO2 emissions : <span id="totalCount">{totalCount}</span>KG / 2500KG (national average per person per year)
         <br />
         <progress value={totalCount} max="2500"></progress>
       </div>

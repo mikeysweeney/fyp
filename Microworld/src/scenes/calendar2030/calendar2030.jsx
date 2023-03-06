@@ -5,8 +5,10 @@ function Popup({ handleClose }) {
   return (
     <div className="popup">
       <div className="popup-inner">
-        <h2>Welcome to Year Transport Planner!</h2>
-        <p>This is a game where you can plan your transportation for the year. 2030</p>
+        <h2>Welcome to Transport Planner Part 2 (2030)</h2>
+        <p>This is a game where you can plan your transportation choices in 2030 comparing to our national 2030 goals!</p>
+        <p>Make a change in your decisions so that you stay below our goals</p>
+        <p>Good Luck!</p>
         <button onClick={handleClose}>OK</button>
       </div>
     </div>
@@ -14,9 +16,10 @@ function Popup({ handleClose }) {
 }
 
 function Calendar2030() {
+  let totalCounttest = 0;
 
   const [imgValues, setImgValues] = useState([]);
-  const [totalCount, setTotalCount] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const [showPopup, setShowPopup] = useState(true);
 
   useEffect(() => {
@@ -41,14 +44,14 @@ function Calendar2030() {
 
   function allowDrop(ev) {
     ev.preventDefault();
-    console.log(ev.target + "allowDrop");
+    //console.log(ev.target + "allowDrop");
   }
 
   function dragStart(ev) {
     ev.dataTransfer.effectAllowed = "move";
     ev.dataTransfer.setData("Text", ev.target.getAttribute("id"));
     ev.dataTransfer.setDragImage(ev.target, 0, 0);
-    console.log(ev.dataTransfer.effectAllowed + "dragStart" + ev.dataTransfer.setData("Text", ev.target.getAttribute("id")));
+    //console.log(ev.dataTransfer.effectAllowed + "dragStart" + ev.dataTransfer.setData("Text", ev.target.getAttribute("id")));
   }
 
   function drag(ev) {
@@ -60,37 +63,25 @@ function Calendar2030() {
     var data = ev.dataTransfer.getData("text");
     var originalElement = document.getElementById(data);
     var cloneElement = originalElement.cloneNode(true);
+    cloneElement.setAttribute("src", originalElement.getAttribute("src")); // set the src attribute for the cloned element
+
     cloneElement.addEventListener("dblclick", () =>
       cloneElement.remove()
     ); // add dblclick event listener
 
     // set the src attribute for the cloned element
-    cloneElement.setAttribute("src", originalElement.getAttribute("src"));
 
-    console.log(originalElement);
-    console.log(cloneElement);
     ev.target.appendChild(cloneElement); // append the clone to the dropzone
-    console.log(ev.target.appendChild(cloneElement));
 
     var imgValueKm = originalElement.getAttribute("data-value-km");
     var imgValueFreq = originalElement.getAttribute("data-value-freq");
-    console.log(imgValueKm);
-    console.log(imgValueFreq);
-    console.log(originalElement.getAttribute("c02value"))
-    console.log(originalElement.getAttribute("c02value") === "0")
     if (originalElement.getAttribute("c02value") === "0") {
-      setTotalCount(prevCount =>
-        parseInt(prevCount) +
-        parseInt(imgValueKm) *
-        parseInt(imgValueFreq) *
-        10 // update the total count
-      );
+      totalCounttest = totalCounttest + imgValueKm * imgValueFreq * 0.101
+      console.log("Total CO2 emissions :" + totalCounttest);
+
     } else if (originalElement.getAttribute("c02value") === "1") {
-      setTotalCount(prevCount =>
-        parseInt(prevCount) +
-        parseInt(imgValueKm) *
-        parseInt(imgValueFreq) // update the total count
-      );
+      totalCounttest = totalCounttest + imgValueKm * imgValueFreq * 0.3485
+      console.log("Total CO2 emissions :" + totalCounttest);
     }
 
 
@@ -144,9 +135,9 @@ function Calendar2030() {
         </div>
       )}
       <div>
-        Total Count: <span id="totalCount">{totalCount}</span> out of 1000
+        Total CO2 emissions : <span id="totalCount">{totalCount}</span>KG CO2 / 1250KG (projected national average per person in 2030)
         <br />
-        <progress value={totalCount} max="1000"></progress>
+        <progress value={totalCount} max="1250"></progress>
       </div>
       <SemesterBlock>
         <Semester id="jan" title="January" />
