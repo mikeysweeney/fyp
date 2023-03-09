@@ -6,7 +6,7 @@ function Popup({ handleClose }) {
     <div className="popup">
       <div className="popup-inner">
         <h2>Welcome to Transport Planner Part 1 </h2>
-        <p>This is a game where you can plan your transportation for the year ahead to get an accurate evaluation of your C02 emissions .</p>
+        <p>This is a simulation where you can plan your transportation for the year ahead to get an accurate evaluation of your C02 emissions .</p>
         <p>Please be as accurate as possible by looking up distances online and being accurate on your monthly decisions</p>
         <button onClick={handleClose}>OK</button>
       </div>
@@ -179,9 +179,134 @@ function Calendar() {
           alt=""
           onContextMenu={(e) => {
             e.preventDefault();
-            const newName = window.prompt("Enter a name for this flight:");
-            const valueKm = window.prompt("Enter a value (in km) for Flight:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Flight:");
+            const newName = window.prompt("Enter a name for this Electric Car:");
+            const valueKm = window.prompt("Enter a value (in km) for Electric Car:");
+            const valueFreq = window.prompt("Enter a value (frequency) for Electric Car:");
+            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
+              e.target.setAttribute("data-value-km", valueKm);
+              e.target.setAttribute("data-value-freq", valueFreq);
+              e.target.setAttribute("title", newName);
+              e.target.setAttribute("id", newName);
+            }
+          }}
+        />
+        <img
+          id="Ferry"
+          c02value="2"
+          draggable="true"
+          onMouseOver={(e) => hover(e.target)}
+          onMouseLeave={(e) => leave(e.target)}
+          onDragStart={dragStart}
+          title="Ferry"
+          src="http://clipart-library.com/image_gallery/603313.png"
+          data-value-km="0"
+          data-value-freq="0"
+          alt=""
+          onContextMenu={(e) => {
+            e.preventDefault();
+            const newName = window.prompt("Enter a name for this Ferry:");
+            const valueKm = window.prompt("Enter a value (in km) for Ferry:");
+            const valueFreq = window.prompt("Enter a value (frequency) for Ferry:");
+            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
+              e.target.setAttribute("data-value-km", valueKm);
+              e.target.setAttribute("data-value-freq", valueFreq);
+              e.target.setAttribute("title", newName);
+              e.target.setAttribute("id", newName);
+            }
+          }}
+
+        />
+
+        <img
+          id="Train"
+          c02value="3"
+          draggable="true"
+          onMouseOver={(e) => hover(e.target)}
+          onMouseLeave={(e) => leave(e.target)}
+          onDragStart={dragStart}
+          title="Train"
+          src="http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png"
+          alt=""
+          onContextMenu={(e) => {
+            e.preventDefault();
+            const newName = window.prompt("Enter a name for this Train:");
+            const valueKm = window.prompt("Enter a value (in km) for Train:");
+            const valueFreq = window.prompt("Enter a value (frequency) for Train:");
+            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
+              e.target.setAttribute("data-value-km", valueKm);
+              e.target.setAttribute("data-value-freq", valueFreq);
+              e.target.setAttribute("title", newName);
+              e.target.setAttribute("id", newName);
+            }
+          }}
+        />
+        <img
+          id="Bus"
+          c02value="3"
+          draggable="true"
+          onMouseOver={(e) => hover(e.target)}
+          onMouseLeave={(e) => leave(e.target)}
+          onDragStart={dragStart}
+          title="Bus"
+          src="http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png"
+          data-value-km="0"
+          data-value-freq="0"
+          alt=""
+          onContextMenu={(e) => {
+            e.preventDefault();
+            const newName = window.prompt("Enter a name for this Bus:");
+            const valueKm = window.prompt("Enter a value (in km) for Bus:");
+            const valueFreq = window.prompt("Enter a value (frequency) for Bus:");
+            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
+              e.target.setAttribute("data-value-km", valueKm);
+              e.target.setAttribute("data-value-freq", valueFreq);
+              e.target.setAttribute("title", newName);
+              e.target.setAttribute("id", newName);
+            }
+          }}
+        />
+        <img
+          id="Bicyle"
+          c02value="4"
+          draggable="true"
+          onMouseOver={(e) => hover(e.target)}
+          onMouseLeave={(e) => leave(e.target)}
+          onDragStart={dragStart}
+          title="Bicyle"
+          src="http://www.clipartbest.com/cliparts/di8/Xpq/di8Xpq4LT.png"
+          data-value-km="0"
+          data-value-freq="0"
+          alt=""
+          onContextMenu={(e) => {
+            e.preventDefault();
+            const newName = window.prompt("Enter a name for this Bicyle:");
+            const valueKm = window.prompt("Enter a value (in km) for Bicyle:");
+            const valueFreq = window.prompt("Enter a value (frequency) for Bicyle:");
+            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
+              e.target.setAttribute("data-value-km", valueKm);
+              e.target.setAttribute("data-value-freq", valueFreq);
+              e.target.setAttribute("title", newName);
+              e.target.setAttribute("id", newName);
+            }
+          }}
+        />
+        <img
+          id="Petrol Car"
+          c02value="5"
+          draggable="true"
+          onMouseOver={(e) => hover(e.target)}
+          onMouseLeave={(e) => leave(e.target)}
+          onDragStart={dragStart}
+          title="Petrol Car"
+          src="http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png"
+          data-value-km="0"
+          data-value-freq="0"
+          alt=""
+          onContextMenu={(e) => {
+            e.preventDefault();
+            const newName = window.prompt("Enter a name for this Petrol Car:");
+            const valueKm = window.prompt("Enter a value (in km) for Petrol Car:");
+            const valueFreq = window.prompt("Enter a value (frequency) for Petrol Car:");
             if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
               e.target.setAttribute("data-value-km", valueKm);
               e.target.setAttribute("data-value-freq", valueFreq);

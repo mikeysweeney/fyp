@@ -12,7 +12,7 @@ const Form = () => {
       text: "How do you usually commute to work or school?",
       options: [
         { id: 0, text: "Drive alone in a car", carbonEmissions: 3600 },
-        { id: 1, text: "Use public transportation", carbonEmissions: 600 },
+        { id: 1, text: "Public transportation", carbonEmissions: 600 },
         { id: 2, text: "Carpool", carbonEmissions: 1000 },
         { id: 3, text: "Bike/Walk", carbonEmissions: 0 },
         { id: 4, text: "Work or study from home", carbonEmissions: 0 },

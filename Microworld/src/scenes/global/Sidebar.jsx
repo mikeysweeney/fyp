@@ -123,21 +123,21 @@ const Sidebar = () => {
               Pages
             </Typography>
             <Item
-              title="2023 Calendar"
+              title="Challenge 1"
               to="/calendar"
               icon={<CalendarTodayOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="2030 Calendar"
+              title="Challenge 2"
               to="/calendar2030"
               icon={<CalendarTodayOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Questionnaire"
+              title="Test Your Knowledge"
               to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}

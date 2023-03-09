@@ -14,14 +14,13 @@ const Topbar = () => {
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
-      
+
       <Box
         fontSize={22}
         fontWeight="bold"
         sx={{ m: "10px 0 0 0" }}
       >
-        Microworlds for teaching issues to do with sustainability and 
-        climate change - Transport and Greenhouse Emissions
+        Microworld - Transport and Greenhouse Emissions
       </Box>
 
       {/* ICONS */}
@@ -32,9 +31,6 @@ const Topbar = () => {
           ) : (
             <LightModeOutlinedIcon />
           )}
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
         </IconButton>
       </Box>
     </Box>

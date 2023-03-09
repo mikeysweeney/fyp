@@ -6,7 +6,7 @@ function Popup({ handleClose }) {
     <div className="popup">
       <div className="popup-inner">
         <h2>Welcome to Transport Planner Part 2 (2030)</h2>
-        <p>This is a game where you can plan your transportation choices in 2030 comparing to our national 2030 goals!</p>
+        <p>This is a simulation where you can plan your transportation choices in 2030 comparing to our national 2030 goals!</p>
         <p>Make a change in your decisions so that you stay below our goals</p>
         <p>Good Luck!</p>
         <button onClick={handleClose}>OK</button>
