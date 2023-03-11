@@ -155,7 +155,7 @@ html {
   height: 100%;
 }
 
-#SemesterBlock {
+#CalendarBlock {
   overflow: auto;
   margin: 5%;
   display: inline-block;
@@ -166,7 +166,7 @@ html {
 }
 
 
-.Semester {
+.Month {
   top: 0;
   overflow: auto;
   margin: 0.5%;

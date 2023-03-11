@@ -19,7 +19,6 @@ function Calendar() {
   const totalCountRef = useRef(0);
   const [showPopup, setShowPopup] = useState(true);
 
-
   function allowDrop(ev) {
     ev.preventDefault();
   }

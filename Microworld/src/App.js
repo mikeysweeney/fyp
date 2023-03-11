@@ -16,6 +16,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Calendar2030 from "./scenes/calendar2030/calendar2030";
+import { DragDropContext } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -39,10 +42,13 @@ function App() {
               <Route path="/pie" element={<Pie />} />
               <Route path="/line" element={<Line />} />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/calendar" element={<Calendar />} />
+              <DragDropContext backend={HTML5Backend}>
+                <Route path="/calendar" element={<Calendar />} />
+              </DragDropContext>
               <Route path="/calendar2030" element={<Calendar2030 />} />
               <Route path="/geography" element={<Geography />} />
             </Routes>
+
           </main>
         </div>
       </ThemeProvider>

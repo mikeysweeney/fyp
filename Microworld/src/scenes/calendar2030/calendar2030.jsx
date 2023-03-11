@@ -1,30 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./calendar2030.css";
 
-function Popup({ handleClose }) {
+function Popup({ handleClose, handleMaxValueChange }) {
+  const [selectedValue, setSelectedValue] = useState("1250");
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    handleMaxValueChange(event.target.value);
+  };
+
   return (
     <div className="popup">
       <div className="popup-inner">
         <h2>Welcome to Transport Planner Part 2 (2030)</h2>
-        <p>This is a simulation where you can plan your transportation choices in 2030 comparing to our national 2030 goals!</p>
+        <p>
+          This is a simulation where you can plan your transportation choices
+          in 2030 comparing to our national 2030 goals!
+        </p>
+        <p>Selected value: {selectedValue}</p>
         <p>Make a change in your decisions so that you stay below our goals</p>
         <p>Good Luck!</p>
+        <label>
+          Max Value:
+          <select onChange={handleChange}>
+            <option value="1250">2030 Goals</option>
+            <option value="750">2050 Goals</option>
+            <option value="450">Net Zero</option>
+          </select>
+        </label>
         <button onClick={handleClose}>OK</button>
       </div>
     </div>
   );
 }
 
+
+
 function Calendar2030() {
   let totalCounttest = 0;
 
-  const [imgValues, setImgValues] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [maxValue, setMaxValue] = useState(1250);
   const [showPopup, setShowPopup] = useState(true);
-
-  useEffect(() => {
-    localStorage.setItem("imgValues", JSON.stringify(imgValues));
-  }, [imgValues]);
 
   useEffect(() => {
     localStorage.setItem("totalCount", JSON.stringify(totalCount));
@@ -32,10 +49,6 @@ function Calendar2030() {
 
 
   useEffect(() => {
-    const storedImgValues = localStorage.getItem("imgValues");
-    if (storedImgValues) {
-      setImgValues(JSON.parse(storedImgValues));
-    }
     const storedtotalCount = localStorage.getItem("totalCount");
     if (storedtotalCount) {
       setTotalCount(JSON.parse(storedtotalCount));
@@ -137,7 +150,7 @@ function Calendar2030() {
       <div>
         Total CO2 emissions : <span id="totalCount">{totalCount}</span>KG CO2 / 1250KG (projected national average per person in 2030)
         <br />
-        <progress value={totalCount} max="1250"></progress>
+        <progress value={totalCount} max={maxValue}></progress>
       </div>
       <SemesterBlock>
         <Semester id="jan" title="January" />
