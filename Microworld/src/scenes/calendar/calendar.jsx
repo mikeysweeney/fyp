@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
+import { useDrag, useDrop } from "react-dnd";
 import "./calendar.css";
+
 
 function Popup({ handleClose }) {
   return (
@@ -14,82 +16,146 @@ function Popup({ handleClose }) {
   );
 }
 
+const pictureList = [
+  {
+    id: 1,
+    url:
+      "https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png",
+    datavaluekm: "0",
+    datavaluefreq: "0",
+  },
+  {
+    id: 2,
+    url:
+      "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
+    datavaluekm: "0",
+    datavaluefreq: "0"
+  },
+  {
+    id: 3,
+    url:
+      "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
+    datavaluekm: "0",
+    datavaluefreq: "0"
+  },
+];
+
+function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures }) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "image",
+    item: { id: id, datavaluekm: datavaluekm, datavaluefreq: datavaluefreq },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
+  const handleClick = () => {
+    const newDatavaluekm = prompt("Enter new value for datavaluekm:", datavaluekm);
+    console.log(newDatavaluekm);
+    const newDatavaluefreq = prompt("Enter new value for datavaluefreq:", datavaluefreq);
+    console.log(newDatavaluefreq);
+    const updatedPictures = pictureList.map((picture) => {
+      if (picture.id === id) {
+        return {
+          ...picture,
+          datavaluekm: newDatavaluekm,
+          datavaluefreq: newDatavaluefreq,
+        };
+      } else {
+        return picture;
+      }
+    });
+    setPictures(updatedPictures);
+    console.log(updatedPictures);
+  };
+
+  return (
+    <img
+      ref={drag}
+      src={url}
+      data-value-km={datavaluekm}
+      data-value-freq={datavaluefreq}
+      width="150px"
+      height="150px"
+      style={{ border: isDragging ? "5px solid black" : "0px" }}
+      alt=""
+      onClick={handleClick}
+    />
+  );
+}
+
 function Calendar() {
-  const [totalCount, setTotalCount] = useState(0);
-  const totalCountRef = useRef(0);
   const [showPopup, setShowPopup] = useState(true);
+  const [pictureList, setPictures] = useState([
+    {
+      id: 1,
+      url:
+        "https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png",
+      datavaluekm: "100",
+      datavaluefreq: "0",
+    },
+    {
+      id: 2,
+      url: "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+    },
+    {
+      id: 3,
+      url: "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+    },
+  ]);
 
-  function allowDrop(ev) {
-    ev.preventDefault();
-  }
+  const [board1, setBoard1] = useState([]);
+  const [board2, setBoard2] = useState([]);
+  const [count, setCount] = useState(0);
 
-  function dragStart(ev) {
-    ev.dataTransfer.effectAllowed = "move";
-    ev.dataTransfer.setData("Text", ev.target.getAttribute("id"));
-    ev.dataTransfer.setDragImage(ev.target, 0, 0);
-  }
+  const [{ isOver: isOver1 }, drop1] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard1(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
 
-  function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-  }
+  const [{ isOver: isOver2 }, drop2] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard2(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
 
-  function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    var originalElement = document.getElementById(data);
-    var cloneElement = originalElement.cloneNode(true);
-    cloneElement.setAttribute("src", originalElement.getAttribute("src"));
+  const addImageToBoard1 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard1((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
 
-    cloneElement.addEventListener("dblclick", () =>
-      cloneElement.remove()
-    ); // add dblclick event listener
 
-    ev.target.appendChild(cloneElement);
-    console.log(ev.target)
-
-    var imgValueKm = originalElement.getAttribute("data-value-km");
-    var imgValueFreq = originalElement.getAttribute("data-value-freq");
-    if (originalElement.getAttribute("c02value") === "0") {
-      setTotalCount(prevTotalCount => {
-        totalCountRef.current = parseFloat(prevTotalCount) + parseFloat(imgValueKm) * parseFloat(imgValueFreq) * 0.101;
-        console.log("Total CO2 emissions :" + totalCountRef.current);
-        return totalCountRef.current;
-      });
-    } else if (originalElement.getAttribute("c02value") === "1") {
-      setTotalCount(prevTotalCount => {
-        totalCountRef.current = parseFloat(prevTotalCount) + parseFloat(imgValueKm) * parseFloat(imgValueFreq) * 0.3485;
-        console.log("Total CO2 emissions :" + totalCountRef.current);
-        return totalCountRef.current;
-      });
-    }
-
-    var dropzone = ev.target;
-    var dropzoneHeight = dropzone.clientHeight;
-    var dropzoneScrollHeight = dropzone.scrollHeight;
-    if (dropzoneScrollHeight > dropzoneHeight) {
-      dropzone.classList.add("extended-dropzone");
-    }
-
-    // Make the cloned image draggable in the drop zone
-    cloneElement.setAttribute("draggable", "true");
-    cloneElement.addEventListener("dragstart", dragStart);
-    cloneElement.addEventListener("drag", drag);
-  }
-
-  function hover(element) {
-    element.classList.add('shake');
-    element.style.opacity = "0.7";
-  }
-
-  function leave(element) {
-    element.classList.remove('shake');
-    element.style.opacity = "1.0";
-  }
+  const addImageToBoard2 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    setBoard2((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + 1);
+  };
 
 
   function SemesterBlock(props) {
     return (
-      <div id="SemesterBlock" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridGap: "10px", marginTop: "30px", marginBottom: "30px" }}>
+      <div
+        id="SemesterBlock"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gridGap: "10px",
+          marginTop: "30px",
+          marginBottom: "30px",
+        }}
+      >
         {props.children}
       </div>
     );
@@ -98,18 +164,13 @@ function Calendar() {
   function Semester(props) {
     return (
       <div id={props.id} style={{ display: "flex", flexDirection: "column" }}>
-        <div className="title" style={{ flexGrow: 1 }}>{props.title}</div>
-        <div className="dropzone" onDrop={drop} onDragOver={allowDrop} style={{ resize: 'both', overflow: 'auto' }}></div>
+        <div className="title" style={{ flexGrow: 1 }}>
+          {props.title}
+        </div>
+        {props.children}
       </div>
     );
   }
-
-  useEffect(() => {
-    const totalCountElement = document.getElementById("totalCount");
-    totalCountElement.innerText = totalCount;
-    console.log("Total CO2 emissions use Effect :" + totalCount);
-    console.log("Total CO2 emissions use Effect 2 :" + totalCountElement.innerText);
-  }, [totalCount]);
 
   return (
     <div style={{ color: "#3366ff", fontFamily: "arial" }} align="center">
@@ -119,203 +180,58 @@ function Calendar() {
         </div>
       )}
       <div>
-        Total CO2 emissions : <span id="totalCount">{totalCount}</span>KG / 2500KG (national average per person per year)
+        Total CO2 emissions : <span id="totalCount">{count}</span>KG / 2500KG
+        (national average per person per year)
         <br />
-        <progress value={totalCount} max="2500"></progress>
+        <progress value={count} max="2500"></progress>
+      </div>
+      <div className="Pictures">
+        {pictureList.map((picture) => {
+          return <Picture
+            key={picture.id}
+            id={picture.id}
+            url={picture.url}
+            datavaluekm={picture.datavaluekm}
+            datavaluefreq={picture.datavaluefreq}
+            pictureList={pictureList}
+            setPictures={setPictures}
+          />;
+        })}
       </div>
       <SemesterBlock>
-        <Semester id="jan" title="January" />
-        <Semester id="feb" title="February" />
-        <Semester id="mar" title="March" />
-        <Semester id="apr" title="April" />
-        <Semester id="may" title="May" />
-        <Semester id="jun" title="June" />
-        <Semester id="jul" title="July" />
-        <Semester id="aug" title="August" />
-        <Semester id="sep" title="September" />
-        <Semester id="oct" title="October" />
-        <Semester id="nov" title="November" />
-        <Semester id="dec" title="December" />
+        <Semester id="jan" title="January">
+          <div className="Board BoardColumn" ref={drop1}>
+            {board1.map((picture) => {
+              return <Picture
+                key={picture.id}
+                id={picture.id}
+                url={picture.url}
+                datavaluekm={picture.datavaluekm}
+                datavaluefreq={picture.datavaluefreq}
+                pictureList={pictureList}
+                setPictures={setPictures}
+              />
+                ;
+            })}
+          </div>
+        </Semester>
+        <Semester id="feb" title="February">
+          <div className="Board BoardColumn" ref={drop2}>
+            {board2.map((picture) => {
+              return <Picture
+                key={picture.id}
+                id={picture.id}
+                url={picture.url}
+                datavaluekm={picture.datavaluekm}
+                datavaluefreq={picture.datavaluefreq}
+                pictureList={pictureList}
+                setPictures={setPictures}
+              />
+                ;
+            })}
+          </div>
+        </Semester>
       </SemesterBlock>
-      <div id="Required" draggable="false" onDrop={drop} onDragOver={allowDrop} style={{ resize: 'both', overflow: 'auto' }}>
-        <div className="title">Transport options</div>
-        <img
-          id="Flight"
-          c02value="0"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Flight1"
-          src="https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png"
-          data-value-km="0"
-          data-value-freq="0"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this flight:");
-            const valueKm = window.prompt("Enter a value (in km) for Flight:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Flight:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-        />
-        <img
-          id="Electric Car"
-          c02value="1"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Electric Car"
-          src="https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png"
-          data-value-km="0"
-          data-value-freq="0"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this Electric Car:");
-            const valueKm = window.prompt("Enter a value (in km) for Electric Car:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Electric Car:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-        />
-        <img
-          id="Ferry"
-          c02value="2"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Ferry"
-          src="http://clipart-library.com/image_gallery/603313.png"
-          data-value-km="0"
-          data-value-freq="0"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this Ferry:");
-            const valueKm = window.prompt("Enter a value (in km) for Ferry:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Ferry:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-
-        />
-
-        <img
-          id="Train"
-          c02value="3"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Train"
-          src="http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this Train:");
-            const valueKm = window.prompt("Enter a value (in km) for Train:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Train:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-        />
-        <img
-          id="Bus"
-          c02value="3"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Bus"
-          src="http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png"
-          data-value-km="0"
-          data-value-freq="0"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this Bus:");
-            const valueKm = window.prompt("Enter a value (in km) for Bus:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Bus:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-        />
-        <img
-          id="Bicyle"
-          c02value="4"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Bicyle"
-          src="http://www.clipartbest.com/cliparts/di8/Xpq/di8Xpq4LT.png"
-          data-value-km="0"
-          data-value-freq="0"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this Bicyle:");
-            const valueKm = window.prompt("Enter a value (in km) for Bicyle:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Bicyle:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-        />
-        <img
-          id="Petrol Car"
-          c02value="5"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Petrol Car"
-          src="http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png"
-          data-value-km="0"
-          data-value-freq="0"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this Petrol Car:");
-            const valueKm = window.prompt("Enter a value (in km) for Petrol Car:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Petrol Car:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-        />
-      </div>
-
     </div >
   );
 }
