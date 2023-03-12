@@ -3,18 +3,49 @@ import { useDrag, useDrop } from "react-dnd";
 import "./calendar.css";
 
 
-function Popup({ handleClose }) {
+function Popup({ handleSubmit, handleClose }) {
+  const [km, setKm] = useState("");
+  const [freq, setFreq] = useState("");
+
+  const handleKmChange = (event) => {
+    setKm(event.target.value);
+  };
+
+  const handleFreqChange = (event) => {
+    setFreq(event.target.value);
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    handleSubmit(km, freq);
+    handleClose();
+  };
+
   return (
     <div className="popup">
       <div className="popup-inner">
-        <h2>Welcome to Transport Planner Part 1 </h2>
-        <p>This is a simulation where you can plan your transportation for the year ahead to get an accurate evaluation of your C02 emissions .</p>
-        <p>Please be as accurate as possible by looking up distances online and being accurate on your monthly decisions</p>
-        <button onClick={handleClose}>OK</button>
+        <h2>Welcome to Transport Planner Part 1</h2>
+        <p>This is a simulation where you can plan your transportation for the year ahead to get an accurate evaluation of your C02 emissions.</p>
+        <p>Please be as accurate as possible by looking up distances online and being accurate on your monthly decisions.</p>
+        <form onSubmit={handleFormSubmit}>
+          <label>
+            Distance (in km):
+            <input type="number" value={km} onChange={handleKmChange} required />
+          </label>
+          <br />
+          <label>
+            Frequency:
+            <input type="number" value={freq} onChange={handleFreqChange} required />
+          </label>
+          <br />
+          <button type="submit">OK</button>
+        </form>
+        <button onClick={handleClose}>Cancel</button>
       </div>
     </div>
   );
 }
+
 
 const pictureList = [
   {
@@ -49,17 +80,29 @@ function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures
     }),
   }));
 
-  const handleClick = () => {
-    const newDatavaluekm = prompt("Enter new value for datavaluekm:", datavaluekm);
-    console.log(newDatavaluekm);
-    const newDatavaluefreq = prompt("Enter new value for datavaluefreq:", datavaluefreq);
-    console.log(newDatavaluefreq);
+  const [hoveredValue, setHoveredValue] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleMouseOver = (event) => {
+    setHoveredValue(event.target.dataset.valueKm);
+  };
+
+  const handleMouseOut = () => {
+    setHoveredValue(null);
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+  };
+
+  const handlePopupSubmit = (km, freq) => {
     const updatedPictures = pictureList.map((picture) => {
       if (picture.id === id) {
         return {
           ...picture,
-          datavaluekm: newDatavaluekm,
-          datavaluefreq: newDatavaluefreq,
+          datavaluekm: km,
+          datavaluefreq: freq,
         };
       } else {
         return picture;
@@ -67,23 +110,66 @@ function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures
     });
     setPictures(updatedPictures);
     console.log(updatedPictures);
+    setShowPopup(false);
+  };
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleClick = () => {
+    setShowPopup(true);
   };
 
   return (
-    <img
-      ref={drag}
-      src={url}
-      data-value-km={datavaluekm}
-      data-value-freq={datavaluefreq}
-      width="150px"
-      height="150px"
-      style={{ border: isDragging ? "5px solid black" : "0px" }}
-      alt=""
-      onClick={handleClick}
-    />
+    <div style={{ position: "relative" }}>
+      <img
+        ref={drag}
+        src={url}
+        data-value-km={datavaluekm}
+        data-value-freq={datavaluefreq}
+        width="150px"
+        height="150px"
+        style={{ border: isDragging ? "5px solid black" : "0px" }}
+        alt=""
+        onClick={handleClick}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      />
+      {showPopup && (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Popup
+            handleSubmit={handlePopupSubmit}
+            handleClose={handlePopupClose}
+          />
+        </div>
+      )}
+      {hoveredValue !== null && (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "white",
+            padding: "5px",
+            borderRadius: "5px",
+            boxShadow: "0 0 5px gray",
+          }}
+        >
+          {hoveredValue} KM
+        </div>
+      )}
+    </div>
   );
 }
-
 function Calendar() {
   const [showPopup, setShowPopup] = useState(true);
   const [pictureList, setPictures] = useState([
@@ -139,8 +225,10 @@ function Calendar() {
 
   const addImageToBoard2 = (id) => {
     const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
     setBoard2((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + 1);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
   };
 
 
