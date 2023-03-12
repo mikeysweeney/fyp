@@ -7,14 +7,17 @@ img {
   margin: 5px;
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
 .Pictures {
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-
 
 .Board {
   display: flex;
@@ -24,6 +27,7 @@ img {
   border: 2px solid #000;
   width: 100%;
 }
+
 
 .Header {
   font-size: 20px;

@@ -185,53 +185,65 @@ function Calendar() {
         <br />
         <progress value={count} max="2500"></progress>
       </div>
-      <div className="Pictures">
-        {pictureList.map((picture) => {
-          return <Picture
-            key={picture.id}
-            id={picture.id}
-            url={picture.url}
-            datavaluekm={picture.datavaluekm}
-            datavaluefreq={picture.datavaluefreq}
-            pictureList={pictureList}
-            setPictures={setPictures}
-          />;
-        })}
+      <div className="container">
+        <SemesterBlock>
+          <Semester id="jan" title="January">
+            <div className="Board BoardColumn" ref={drop1}>
+              {board1.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="feb" title="February">
+            <div className="Board BoardColumn" ref={drop2}>
+              {board2.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="mar" title="March" />
+          <Semester id="apr" title="April" />
+          <Semester id="may" title="May" />
+          <Semester id="jun" title="June" />
+          <Semester id="jul" title="July" />
+          <Semester id="aug" title="August" />
+          <Semester id="sep" title="September" />
+          <Semester id="oct" title="October" />
+          <Semester id="nov" title="November" />
+          <Semester id="dec" title="December" />
+        </SemesterBlock>
+        <div className="Pictures">
+          {pictureList.map((picture) => {
+            return <Picture
+              key={picture.id}
+              id={picture.id}
+              url={picture.url}
+              datavaluekm={picture.datavaluekm}
+              datavaluefreq={picture.datavaluefreq}
+              pictureList={pictureList}
+              setPictures={setPictures}
+            />;
+          })}
+        </div>
       </div>
-      <SemesterBlock>
-        <Semester id="jan" title="January">
-          <div className="Board BoardColumn" ref={drop1}>
-            {board1.map((picture) => {
-              return <Picture
-                key={picture.id}
-                id={picture.id}
-                url={picture.url}
-                datavaluekm={picture.datavaluekm}
-                datavaluefreq={picture.datavaluefreq}
-                pictureList={pictureList}
-                setPictures={setPictures}
-              />
-                ;
-            })}
-          </div>
-        </Semester>
-        <Semester id="feb" title="February">
-          <div className="Board BoardColumn" ref={drop2}>
-            {board2.map((picture) => {
-              return <Picture
-                key={picture.id}
-                id={picture.id}
-                url={picture.url}
-                datavaluekm={picture.datavaluekm}
-                datavaluefreq={picture.datavaluefreq}
-                pictureList={pictureList}
-                setPictures={setPictures}
-              />
-                ;
-            })}
-          </div>
-        </Semester>
-      </SemesterBlock>
     </div >
   );
 }
