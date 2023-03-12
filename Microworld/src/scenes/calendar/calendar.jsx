@@ -49,26 +49,69 @@ function Popup({ handleSubmit, handleClose }) {
 
 const pictureList = [
   {
-    id: 1,
+    id: "Flight",
     url:
       "https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png",
     datavaluekm: "0",
     datavaluefreq: "0",
   },
   {
-    id: 2,
+    id: "Electric Car",
+    url:
+      "https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png",
+    datavaluekm: "0",
+    datavaluefreq: "0"
+  },
+  {
+    id: "Ferry",
+    url:
+      "http://clipart-library.com/image_gallery/603313.png",
+    datavaluekm: "0",
+    datavaluefreq: "0"
+  },
+  {
+    id: "Train",
+    url:
+      "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
+    datavaluekm: "0",
+    datavaluefreq: "0",
+  },
+  {
+    id: "Bus",
+    url:
+      "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
+    datavaluekm: "0",
+    datavaluefreq: "0"
+  },
+  {
+    id: "Petrol Car",
+    url:
+      "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
+    datavaluekm: "0",
+    datavaluefreq: "0"
+  },
+  {
+    id: "Petrol Car",
+    url:
+      "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
+    datavaluekm: "0",
+    datavaluefreq: "0",
+  },
+  {
+    id: 8,
     url:
       "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
     datavaluekm: "0",
     datavaluefreq: "0"
   },
   {
-    id: 3,
+    id: 9,
     url:
       "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
     datavaluekm: "0",
     datavaluefreq: "0"
   },
+
 ];
 
 function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures }) {
@@ -174,28 +217,82 @@ function Calendar() {
   const [showPopup, setShowPopup] = useState(true);
   const [pictureList, setPictures] = useState([
     {
-      id: 1,
+      id: "Flight",
       url:
         "https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png",
-      datavaluekm: "100",
-      datavaluefreq: "0",
-    },
-    {
-      id: 2,
-      url: "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
       datavaluekm: "0",
       datavaluefreq: "0",
     },
     {
-      id: 3,
-      url: "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
+      id: "Electric Car",
+      url:
+        "https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png",
+      datavaluekm: "0",
+      datavaluefreq: "0"
+    },
+    {
+      id: "Ferry",
+      url:
+        "http://clipart-library.com/image_gallery/603313.png",
+      datavaluekm: "0",
+      datavaluefreq: "0"
+    },
+    {
+      id: "Train",
+      url:
+        "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
       datavaluekm: "0",
       datavaluefreq: "0",
+    },
+    {
+      id: "Bus",
+      url:
+        "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
+      datavaluekm: "0",
+      datavaluefreq: "0"
+    },
+    {
+      id: "Petrol Car",
+      url:
+        "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
+      datavaluekm: "0",
+      datavaluefreq: "0"
+    },
+    {
+      id: "Petrol Car",
+      url:
+        "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+    },
+    {
+      id: 8,
+      url:
+        "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
+      datavaluekm: "0",
+      datavaluefreq: "0"
+    },
+    {
+      id: 9,
+      url:
+        "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
+      datavaluekm: "0",
+      datavaluefreq: "0"
     },
   ]);
 
   const [board1, setBoard1] = useState([]);
   const [board2, setBoard2] = useState([]);
+  const [board3, setBoard3] = useState([]);
+  const [board4, setBoard4] = useState([]);
+  const [board5, setBoard5] = useState([]);
+  const [board6, setBoard6] = useState([]);
+  const [board7, setBoard7] = useState([]);
+  const [board8, setBoard8] = useState([]);
+  const [board9, setBoard9] = useState([]);
+  const [board10, setBoard10] = useState([]);
+  const [board11, setBoard11] = useState([]);
+  const [board12, setBoard12] = useState([]);
   const [count, setCount] = useState(0);
 
   const [{ isOver: isOver1 }, drop1] = useDrop({
@@ -214,6 +311,85 @@ function Calendar() {
     }),
   });
 
+  const [{ isOver: isOver3 }, drop3] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard3(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver4 }, drop4] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard4(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver5 }, drop5] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard5(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver6 }, drop6] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard6(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver7 }, drop7] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard7(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver8 }, drop8] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard8(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver9 }, drop9] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard9(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver10 }, drop10] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard10(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver11 }, drop11] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard11(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver12 }, drop12] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard12(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
   const addImageToBoard1 = (id) => {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
@@ -228,6 +404,91 @@ function Calendar() {
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
     setBoard2((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+  const addImageToBoard3 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard3((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+
+  const addImageToBoard4 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard4((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+  const addImageToBoard5 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard5((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+
+  const addImageToBoard6 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard6((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+  const addImageToBoard7 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard7((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+
+  const addImageToBoard8 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard8((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+  const addImageToBoard9 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard9((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+
+  const addImageToBoard10 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard10((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+  const addImageToBoard11 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard11((board) => [...board, picture]);
+    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+  };
+
+
+  const addImageToBoard12 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    setBoard12((board) => [...board, picture]);
     setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
   };
 
@@ -307,16 +568,166 @@ function Calendar() {
               })}
             </div>
           </Semester>
-          <Semester id="mar" title="March" />
-          <Semester id="apr" title="April" />
-          <Semester id="may" title="May" />
-          <Semester id="jun" title="June" />
-          <Semester id="jul" title="July" />
-          <Semester id="aug" title="August" />
-          <Semester id="sep" title="September" />
-          <Semester id="oct" title="October" />
-          <Semester id="nov" title="November" />
-          <Semester id="dec" title="December" />
+          <Semester id="mar" title="March" >
+            <div className="Board BoardColumn" ref={drop3}>
+              {board3.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="apr" title="April" >
+            <div className="Board BoardColumn" ref={drop4}>
+              {board4.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="may" title="May" >
+            <div className="Board BoardColumn" ref={drop5}>
+              {board5.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="jun" title="June" >
+            <div className="Board BoardColumn" ref={drop6}>
+              {board6.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="jul" title="July" >
+            <div className="Board BoardColumn" ref={drop7}>
+              {board7.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="aug" title="August" >
+            <div className="Board BoardColumn" ref={drop8}>
+              {board8.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="sep" title="September" >
+            <div className="Board BoardColumn" ref={drop9}>
+              {board9.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="oct" title="October" >
+            <div className="Board BoardColumn" ref={drop10}>
+              {board10.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="nov" title="November" >
+            <div className="Board BoardColumn" ref={drop11}>
+              {board11.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
+          <Semester id="dec" title="December" >
+            <div className="Board BoardColumn" ref={drop12}>
+              {board12.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Semester>
         </SemesterBlock>
         <div className="Pictures">
           {pictureList.map((picture) => {
