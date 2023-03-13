@@ -154,9 +154,11 @@ function Picture({ id, url, pictureList, setPictures }) {
             padding: "5px",
             borderRadius: "5px",
             boxShadow: "0 0 5px gray",
+            fontSize: "10px",
+            width: "150px",
           }}
         >
-          {pictureList.find((picture) => picture.id === hoveredValue)?.title}
+          <strong>Type: </strong> {id} <br /> <strong>Name: </strong> {pictureList.find((picture) => picture.id === hoveredValue)?.title}
         </div>
       )}
     </div>
@@ -208,7 +210,7 @@ function Calendar() {
       title: "Bus"
     },
     {
-      id: "Petrol Car",
+      id: "Medium Petrol Car",
       url:
         "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
       datavaluekm: "0",
@@ -216,28 +218,44 @@ function Calendar() {
       title: "Petrol Car"
     },
     {
-      id: "Diesel Car",
+      id: "Medium Diesel Car",
       url:
-        "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
+        "http://www.clker.com/cliparts/1/3/f/6/11970920461654850943Harreck_Blue_Car.svg.med.png",
       datavaluekm: "0",
       datavaluefreq: "0",
       title: "Diesel Car"
     },
     {
-      id: 8,
+      id: "Carpool",
       url:
-        "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
+        "http://www.clker.com/cliparts/0/1/f/7/11949846031382769588beach_trip_ganson.svg.med.png",
       datavaluekm: "0",
       datavaluefreq: "0",
-      title: "Train"
+      title: "Carpool"
     },
     {
-      id: 9,
+      id: "Motorbike",
       url:
-        "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
+        "http://www.clker.com/cliparts/e/6/4/c/11970861871447741097Gerald_G_Motorcycle_Clipart.svg.med.png",
       datavaluekm: "0",
       datavaluefreq: "0",
-      title: "Bus"
+      title: "Motorbike"
+    },
+    {
+      id: "Tram",
+      url:
+        "http://www.clker.com/cliparts/Y/R/t/S/J/8/station.svg.med.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Tram"
+    },
+    {
+      id: "Bike",
+      url:
+        "http://www.clker.com/cliparts/a/1/7/b/1194989604419727334vtt_02.svg.med.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Bike"
     },
   ]);
 
