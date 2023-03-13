@@ -1,225 +1,362 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
+import { useDrag, useDrop } from "react-dnd";
 import "./calendar2030.css";
+import { v4 as uuidv4 } from 'uuid';
 
-function Popup({ handleClose, handleMaxValueChange }) {
-  const [selectedValue, setSelectedValue] = useState("1250");
 
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-    handleMaxValueChange(event.target.value);
-  };
-
+function PopupEnter({ handleClose }) {
   return (
-    <div className="popup">
+    <div className="popupenter">
       <div className="popup-inner">
         <h2>Welcome to Transport Planner Part 2 (2030)</h2>
         <p>
           This is a simulation where you can plan your transportation choices
           in 2030 comparing to our national 2030 goals!
         </p>
-        <p>Selected value: {selectedValue}</p>
         <p>Make a change in your decisions so that you stay below our goals</p>
         <p>Good Luck!</p>
-        <label>
-          Max Value:
-          <select onChange={handleChange}>
-            <option value="1250">2030 Goals</option>
-            <option value="750">2050 Goals</option>
-            <option value="450">Net Zero</option>
-          </select>
-        </label>
         <button onClick={handleClose}>OK</button>
       </div>
     </div>
   );
 }
 
+function Popup({ handleSubmit, handleClose }) {
+  const [km, setKm] = useState("");
+  const [freq, setFreq] = useState("");
+  const [title, setTitle] = useState("");
 
+  const handleKmChange = (event) => {
+    setKm(event.target.value);
+  };
+
+  const handleFreqChange = (event) => {
+    setFreq(event.target.value);
+  };
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    handleSubmit(km, freq, title);
+    handleClose();
+  };
+
+  return (
+    <div className="popup">
+      <div className="popup-inner">
+        <h2>Modify your transportation values here</h2>
+        <form onSubmit={handleFormSubmit}>
+          <label>
+            Title:
+            <input type="text" value={title} onChange={handleTitleChange} required />
+          </label>
+          <br />
+          <label>
+            Distance (in km):
+            <input type="number" value={km} onChange={handleKmChange} required />
+          </label>
+          <br />
+          <label>
+            Frequency:
+            <input type="number" value={freq} onChange={handleFreqChange} required />
+          </label>
+          <br />
+          <button type="submit">OK</button>
+        </form>
+        <button onClick={handleClose}>Cancel</button>
+      </div>
+    </div>
+  );
+}
+
+
+function Picture({ id, url, pictureList, setPictures, board, setBoard, count, setCount }) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "image",
+    item: { id: id },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
+  const [hoveredValue, setHoveredValue] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleMouseOver = (event) => {
+    setHoveredValue(event.target.id);
+  };
+
+  const handleMouseOut = () => {
+    setHoveredValue(null);
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+  };
+
+  const handlePopupSubmit = (km, freq, title) => {
+    const updatedPictures = pictureList.map((picture) => {
+      if (picture.id === id) {
+        return {
+          ...picture,
+          title: title,
+          datavaluekm: km,
+          datavaluefreq: freq,
+        };
+      } else {
+        return picture;
+      }
+    });
+    setPictures(updatedPictures);
+    setShowPopup(false);
+  };
+
+  const handleContextMenu = (event) => {
+    event.preventDefault(); // Prevents the default context menu from showing up
+    setShowPopup(true);
+  };
+
+  return (
+    <div style={{ position: "relative" }}>
+      <img
+        ref={drag}
+        src={url}
+        id={id}
+        width="150px"
+        height="150px"
+        style={{ border: isDragging ? "5px solid black" : "0px" }}
+        alt=""
+        onContextMenu={handleContextMenu}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      />
+      {showPopup && (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <Popup
+            handleSubmit={handlePopupSubmit}
+            handleClose={handlePopupClose}
+          />
+        </div>
+      )}
+      {hoveredValue !== null && (
+        <div
+          style={{
+            position: "absolute",
+            top: "-30%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "white",
+            padding: "5px",
+            borderRadius: "5px",
+            boxShadow: "0 0 5px gray",
+          }}
+        >
+          {pictureList.find((picture) => picture.id === hoveredValue)?.title}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Calendar2030() {
-  let totalCounttest = 0;
+  const [showPopupEnter, setShowPopupEnter] = useState(true);
+  const [pictureList, setPictures] = useState([
+    {
+      id: "Flight",
+      url:
+        "https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Flight"
+    },
+    {
+      id: "Electric Car",
+      url:
+        "https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Electric Car"
+    },
 
-  const [totalCount, setTotalCount] = useState(0);
-  const [maxValue, setMaxValue] = useState(1250);
-  const [showPopup, setShowPopup] = useState(true);
+  ]);
 
-  useEffect(() => {
-    localStorage.setItem("totalCount", JSON.stringify(totalCount));
-  }, [totalCount]);
+  const [board1, setBoard1] = useState([]);
+  const [board2, setBoard2] = useState([]);
+  const [count, setCount] = useState(0);
+  const [maxValue, setMaxValue] = useState(1250); // added state for max value of progress bar
 
 
-  useEffect(() => {
-    const storedtotalCount = localStorage.getItem("totalCount");
-    if (storedtotalCount) {
-      setTotalCount(JSON.parse(storedtotalCount));
+  const [{ isOver: isOver1 }, drop1] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard1(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [{ isOver: isOver2 }, drop2] = useDrop({
+    accept: "image",
+    drop: (item) => addImageToBoard2(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const calculateC02Total = (id, datavaluekm, datavaluefreq) => {
+    let C02total = 0;
+    if (id === "Flight") {
+      C02total = datavaluekm * datavaluefreq;
     }
-  }, []);
+    if (id === "Electric Car") {
+      C02total = datavaluekm + datavaluefreq;
+    }
+    return C02total;
+  };
 
-  function allowDrop(ev) {
-    ev.preventDefault();
-    //console.log(ev.target + "allowDrop");
-  }
 
-  function dragStart(ev) {
-    ev.dataTransfer.effectAllowed = "move";
-    ev.dataTransfer.setData("Text", ev.target.getAttribute("id"));
-    ev.dataTransfer.setDragImage(ev.target, 0, 0);
-    //console.log(ev.dataTransfer.effectAllowed + "dragStart" + ev.dataTransfer.setData("Text", ev.target.getAttribute("id")));
-  }
+  const addImageToBoard1 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
+    const livecount = count + C02total;
+    if (livecount <= maxValue) {
+      const newPicture = { ...picture, id: uuidv4(), canDelete: true }; // generate a unique ID for the picture and add canDelete property
+      setBoard1((board) => [...board, newPicture]);
+      setCount((prevCount) => prevCount + C02total);
+    } else {
+      alert("If you place this you will exceed your maximum C02 limit for this year");
+    }
+  };
 
-  function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-  }
 
-  function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    var originalElement = document.getElementById(data);
-    var cloneElement = originalElement.cloneNode(true);
-    cloneElement.setAttribute("src", originalElement.getAttribute("src")); // set the src attribute for the cloned element
-
-    cloneElement.addEventListener("dblclick", () =>
-      cloneElement.remove()
-    ); // add dblclick event listener
-
-    // set the src attribute for the cloned element
-
-    ev.target.appendChild(cloneElement); // append the clone to the dropzone
-
-    var imgValueKm = originalElement.getAttribute("data-value-km");
-    var imgValueFreq = originalElement.getAttribute("data-value-freq");
-    if (originalElement.getAttribute("c02value") === "0") {
-      totalCounttest = totalCounttest + imgValueKm * imgValueFreq * 0.101
-      console.log("Total CO2 emissions :" + totalCounttest);
-
-    } else if (originalElement.getAttribute("c02value") === "1") {
-      totalCounttest = totalCounttest + imgValueKm * imgValueFreq * 0.3485
-      console.log("Total CO2 emissions :" + totalCounttest);
+  const addImageToBoard2 = (id) => {
+    const picture = pictureList.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
+    const livecount = count + C02total;
+    if (livecount <= maxValue) {
+      setBoard2((board) => [...board, picture]);
+      setCount((prevCount) => prevCount + C02total);
+    }
+    else {
+      alert("If you place this you will exceed your maximum C02 limit for this year")
     }
 
-
-    // check if there is enough space in the dropzone to add another image
-    var dropzone = ev.target;
-    var dropzoneHeight = dropzone.clientHeight;
-    var dropzoneScrollHeight = dropzone.scrollHeight;
-    if (dropzoneScrollHeight > dropzoneHeight) {
-      dropzone.classList.add("extended-dropzone"); // add CSS class to extend dropzone
-    }
-
-    // Make the cloned image draggable in the drop zone
-    cloneElement.setAttribute("draggable", "true");
-    cloneElement.addEventListener("dragstart", dragStart);
-    cloneElement.addEventListener("drag", drag);
-  }
+  };
 
 
-  function hover(element) {
-    element.classList.add('shake');
-    element.style.opacity = "0.7";
-  }
-
-  function leave(element) {
-    element.classList.remove('shake');
-    element.style.opacity = "1.0";
-  }
-
-  function SemesterBlock(props) {
+  function CalendarBlock(props) {
     return (
-      <div id="SemesterBlock" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridGap: "10px", marginTop: "30px", marginBottom: "30px" }}>
+      <div
+        id="CalendarBlock"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gridGap: "10px",
+          marginTop: "30px",
+          marginBottom: "30px",
+        }}
+      >
         {props.children}
       </div>
     );
   }
 
-  function Semester(props) {
+  function Month(props) {
     return (
       <div id={props.id} style={{ display: "flex", flexDirection: "column" }}>
-        <div className="title" style={{ flexGrow: 1 }}>{props.title}</div>
-        <div className="dropzone" onDrop={drop} onDragOver={allowDrop} style={{ resize: 'both', overflow: 'auto' }}></div>
+        <div className="title" style={{ flexGrow: 0, minHeight: "25px", textAlign: "center", fontWeight: "bold", fontSize: "15px" }}>
+          {props.title}
+        </div>
+        {props.children}
       </div>
     );
   }
 
   return (
     <div style={{ color: "#3366ff", fontFamily: "arial" }} align="center">
-      {showPopup && (
+      {showPopupEnter && (
         <div className="popup-overlay">
-          <Popup handleClose={() => setShowPopup(false)} />
+          <PopupEnter handleClose={() => setShowPopupEnter(false)} />
         </div>
       )}
-      <div>
-        Total CO2 emissions : <span id="totalCount">{totalCount}</span>KG CO2 / 1250KG (projected national average per person in 2030)
+      <div style={{ fontSize: '18px', fontWeight: 'bold' }}>
+        Select your goal
         <br />
-        <progress value={totalCount} max={maxValue}></progress>
+        <label htmlFor="maxValue"></label>
+        <select id="maxValue" onChange={(e) => setMaxValue(parseInt(e.target.value))} style={{ backgroundColor: '#3366ff', borderRadius: '10px', fontSize: '18px' }}>
+          <option value="1250">2030 Goals</option>
+          <option value="750">2050 Goals</option>
+          <option value="450">Net Zero</option>
+        </select>
+        <br />
+        <span style={{ fontSize: '16px', fontWeight: 'bold' }}>Total CO2 emissions : </span>
+        <span id="totalCount" style={{ fontSize: '16px', fontWeight: 'bold' }}>{count.toLocaleString()}</span>
+        <span style={{ fontSize: '16px', fontWeight: 'bold' }}>KG / {maxValue.toLocaleString()}KG </span>
+        <br />
+        <progress value={count} max={maxValue} className={count > { maxValue } ? "exceeded" : ""}></progress>
       </div>
-      <SemesterBlock>
-        <Semester id="jan" title="January" />
-        <Semester id="feb" title="February" />
-        <Semester id="mar" title="March" />
-        <Semester id="apr" title="April" />
-        <Semester id="may" title="May" />
-        <Semester id="jun" title="June" />
-        <Semester id="jul" title="July" />
-        <Semester id="aug" title="August" />
-        <Semester id="sep" title="September" />
-        <Semester id="oct" title="October" />
-        <Semester id="nov" title="November" />
-        <Semester id="dec" title="December" />
-      </SemesterBlock>
-      <div id="Required" draggable="false" onDrop={drop} onDragOver={allowDrop} style={{ resize: 'both', overflow: 'auto' }}>
-        <div className="title">Transport options</div>
-        <img
-          id="Flight"
-          c02value="0"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Flight1"
-          src="https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png"
-          data-value-km="0"
-          data-value-freq="0"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this flight:");
-            const valueKm = window.prompt("Enter a value (in km) for Flight:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Flight:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-        />
-        <img
-          id="Electric Car"
-          c02value="1"
-          draggable="true"
-          onMouseOver={(e) => hover(e.target)}
-          onMouseLeave={(e) => leave(e.target)}
-          onDragStart={dragStart}
-          title="Electric Car"
-          src="https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png"
-          data-value-km="0"
-          data-value-freq="0"
-          alt=""
-          onContextMenu={(e) => {
-            e.preventDefault();
-            const newName = window.prompt("Enter a name for this flight:");
-            const valueKm = window.prompt("Enter a value (in km) for Flight:");
-            const valueFreq = window.prompt("Enter a value (frequency) for Flight:");
-            if (valueKm !== null && valueFreq !== null && !isNaN(parseInt(valueKm)) && !isNaN(parseInt(valueFreq))) {
-              e.target.setAttribute("data-value-km", valueKm);
-              e.target.setAttribute("data-value-freq", valueFreq);
-              e.target.setAttribute("title", newName);
-              e.target.setAttribute("id", newName);
-            }
-          }}
-        />
+      <div className="container">
+        <CalendarBlock>
+          <Month id="jan" title="January">
+            <div className="Board BoardColumn" ref={drop1}>
+              {board1.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Month>
+          <Month id="feb" title="February">
+            <div className="Board BoardColumn" ref={drop2}>
+              {board2.map((picture) => {
+                return <Picture
+                  key={picture.id}
+                  id={picture.id}
+                  url={picture.url}
+                  datavaluekm={picture.datavaluekm}
+                  datavaluefreq={picture.datavaluefreq}
+                  pictureList={pictureList}
+                  setPictures={setPictures}
+                />
+                  ;
+              })}
+            </div>
+          </Month>
+        </CalendarBlock>
+        <div className="Pictures">Transport options
+          {pictureList.map((picture) => {
+            return <Picture
+              key={picture.id}
+              id={picture.id}
+              url={picture.url}
+              datavaluekm={picture.datavaluekm}
+              datavaluefreq={picture.datavaluefreq}
+              pictureList={pictureList}
+              setPictures={setPictures}
+            />;
+          })}
+        </div>
       </div>
-
     </div >
   );
 }

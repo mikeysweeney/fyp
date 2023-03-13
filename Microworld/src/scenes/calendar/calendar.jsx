@@ -2,10 +2,23 @@ import React, { useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import "./calendar.css";
 
+function PopupEnter({ handleClose }) {
+  return (
+    <div className="popupenter">
+      <div className="popup-inner">
+        <h2>Welcome to Transport Planner Part 1 </h2>
+        <p>This is a simulation where you can plan your transportation for the year ahead to get an accurate evaluation of your C02 emissions .</p>
+        <p>Please be as accurate as possible by looking up distances online and being accurate on your monthly decisions</p>
+        <button onClick={handleClose}>OK</button>
+      </div>
+    </div>
+  );
+}
 
 function Popup({ handleSubmit, handleClose }) {
   const [km, setKm] = useState("");
   const [freq, setFreq] = useState("");
+  const [title, setTitle] = useState("");
 
   const handleKmChange = (event) => {
     setKm(event.target.value);
@@ -15,26 +28,33 @@ function Popup({ handleSubmit, handleClose }) {
     setFreq(event.target.value);
   };
 
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    handleSubmit(km, freq);
+    handleSubmit(km, freq, title);
     handleClose();
   };
 
   return (
     <div className="popup">
       <div className="popup-inner">
-        <h2>Welcome to Transport Planner Part 1</h2>
-        <p>This is a simulation where you can plan your transportation for the year ahead to get an accurate evaluation of your C02 emissions.</p>
-        <p>Please be as accurate as possible by looking up distances online and being accurate on your monthly decisions.</p>
+        <h2>Modify your transportation values here</h2>
         <form onSubmit={handleFormSubmit}>
+          <label>
+            Title of trip:
+            <input type="text" value={title} onChange={handleTitleChange} required />
+          </label>
+          <br />
           <label>
             Distance (in km):
             <input type="number" value={km} onChange={handleKmChange} required />
           </label>
           <br />
           <label>
-            Frequency:
+            Frequency per month (eg: A school trip is twice daily during weekdays so would be 40 trips per month):
             <input type="number" value={freq} onChange={handleFreqChange} required />
           </label>
           <br />
@@ -47,77 +67,10 @@ function Popup({ handleSubmit, handleClose }) {
 }
 
 
-const pictureList = [
-  {
-    id: "Flight",
-    url:
-      "https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png",
-    datavaluekm: "0",
-    datavaluefreq: "0",
-  },
-  {
-    id: "Electric Car",
-    url:
-      "https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png",
-    datavaluekm: "0",
-    datavaluefreq: "0"
-  },
-  {
-    id: "Ferry",
-    url:
-      "http://clipart-library.com/image_gallery/603313.png",
-    datavaluekm: "0",
-    datavaluefreq: "0"
-  },
-  {
-    id: "Train",
-    url:
-      "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
-    datavaluekm: "0",
-    datavaluefreq: "0",
-  },
-  {
-    id: "Bus",
-    url:
-      "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
-    datavaluekm: "0",
-    datavaluefreq: "0"
-  },
-  {
-    id: "Petrol Car",
-    url:
-      "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
-    datavaluekm: "0",
-    datavaluefreq: "0"
-  },
-  {
-    id: "Petrol Car",
-    url:
-      "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
-    datavaluekm: "0",
-    datavaluefreq: "0",
-  },
-  {
-    id: 8,
-    url:
-      "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
-    datavaluekm: "0",
-    datavaluefreq: "0"
-  },
-  {
-    id: 9,
-    url:
-      "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
-    datavaluekm: "0",
-    datavaluefreq: "0"
-  },
-
-];
-
-function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures }) {
+function Picture({ id, url, pictureList, setPictures }) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "image",
-    item: { id: id, datavaluekm: datavaluekm, datavaluefreq: datavaluefreq },
+    item: { id: id },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -125,10 +78,9 @@ function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures
 
   const [hoveredValue, setHoveredValue] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [inputValue, setInputValue] = useState("");
 
   const handleMouseOver = (event) => {
-    setHoveredValue(event.target.dataset.valueKm);
+    setHoveredValue(event.target.id);
   };
 
   const handleMouseOut = () => {
@@ -139,11 +91,12 @@ function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures
     setShowPopup(false);
   };
 
-  const handlePopupSubmit = (km, freq) => {
+  const handlePopupSubmit = (km, freq, title) => {
     const updatedPictures = pictureList.map((picture) => {
       if (picture.id === id) {
         return {
           ...picture,
+          title: title,
           datavaluekm: km,
           datavaluefreq: freq,
         };
@@ -152,30 +105,26 @@ function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures
       }
     });
     setPictures(updatedPictures);
-    console.log(updatedPictures);
     setShowPopup(false);
   };
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleClick = () => {
+  const handleContextMenu = (event) => {
+    event.preventDefault(); // Prevents the default context menu from showing up
     setShowPopup(true);
   };
+
 
   return (
     <div style={{ position: "relative" }}>
       <img
         ref={drag}
         src={url}
-        data-value-km={datavaluekm}
-        data-value-freq={datavaluefreq}
+        id={id}
         width="150px"
         height="150px"
         style={{ border: isDragging ? "5px solid black" : "0px" }}
         alt=""
-        onClick={handleClick}
+        onContextMenu={handleContextMenu}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       />
@@ -185,7 +134,7 @@ function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures
             position: "absolute",
             top: "50%",
             left: "50%",
-            transform: "translate(-50%, -50%)",
+            transform: "translate(-150%, -100%)",
           }}
         >
           <Popup
@@ -198,7 +147,7 @@ function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures
         <div
           style={{
             position: "absolute",
-            top: "50%",
+            top: "-30%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             backgroundColor: "white",
@@ -207,14 +156,16 @@ function Picture({ id, url, datavaluekm, datavaluefreq, pictureList, setPictures
             boxShadow: "0 0 5px gray",
           }}
         >
-          {hoveredValue} KM
+          {pictureList.find((picture) => picture.id === hoveredValue)?.title}
         </div>
       )}
     </div>
   );
 }
+
+
 function Calendar() {
-  const [showPopup, setShowPopup] = useState(true);
+  const [showPopupEnter, setShowPopupEnter] = useState(true);
   const [pictureList, setPictures] = useState([
     {
       id: "Flight",
@@ -222,20 +173,23 @@ function Calendar() {
         "https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png",
       datavaluekm: "0",
       datavaluefreq: "0",
+      title: "Flight"
     },
     {
       id: "Electric Car",
       url:
         "https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png",
       datavaluekm: "0",
-      datavaluefreq: "0"
+      datavaluefreq: "0",
+      title: "Electric Car"
     },
     {
       id: "Ferry",
       url:
         "http://clipart-library.com/image_gallery/603313.png",
       datavaluekm: "0",
-      datavaluefreq: "0"
+      datavaluefreq: "0",
+      title: "Ferry"
     },
     {
       id: "Train",
@@ -243,20 +197,15 @@ function Calendar() {
         "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
       datavaluekm: "0",
       datavaluefreq: "0",
+      title: "Train"
     },
     {
       id: "Bus",
       url:
         "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
       datavaluekm: "0",
-      datavaluefreq: "0"
-    },
-    {
-      id: "Petrol Car",
-      url:
-        "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
-      datavaluekm: "0",
-      datavaluefreq: "0"
+      datavaluefreq: "0",
+      title: "Bus"
     },
     {
       id: "Petrol Car",
@@ -264,20 +213,31 @@ function Calendar() {
         "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
       datavaluekm: "0",
       datavaluefreq: "0",
+      title: "Petrol Car"
+    },
+    {
+      id: "Diesel Car",
+      url:
+        "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Diesel Car"
     },
     {
       id: 8,
       url:
         "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
       datavaluekm: "0",
-      datavaluefreq: "0"
+      datavaluefreq: "0",
+      title: "Train"
     },
     {
       id: 9,
       url:
         "http://www.clker.com/cliparts/W/A/Y/u/H/u/blue-bus-hi.png",
       datavaluekm: "0",
-      datavaluefreq: "0"
+      datavaluefreq: "0",
+      title: "Bus"
     },
   ]);
 
@@ -390,12 +350,52 @@ function Calendar() {
       isOver: !!monitor.isOver(),
     }),
   });
+
+  const calculateC02Total = (id, datavaluekm, datavaluefreq) => {
+    let C02total = 0;
+    if (id === "Flight") {
+      C02total = datavaluekm * datavaluefreq * 0.255;
+    }
+    if (id === "Electric Car") {
+      C02total = datavaluekm + datavaluefreq * 0.0553;
+    }
+    if (id === "Petrol Car") {
+      C02total = datavaluekm + datavaluefreq * 0.192;
+    }
+    if (id === "Diesel Car") {
+      C02total = datavaluekm + datavaluefreq * 0.171;
+    }
+    if (id === "Train") {
+      C02total = datavaluekm + datavaluefreq * 0.06;
+    }
+    if (id === "Bus") {
+      C02total = datavaluekm + datavaluefreq * 0.105;
+    }
+    if (id === "Motorbike") {
+      C02total = datavaluekm + datavaluefreq * 0.103;
+    }
+    if (id === "Bicycle") {
+      C02total = datavaluekm + datavaluefreq * 0;
+    }
+    if (id === "Walking") {
+      C02total = datavaluekm + datavaluefreq * 0;
+    }
+    if (id === "Ferry") {
+      C02total = datavaluekm + datavaluefreq * 0.019;
+    }
+    if (id === "Tram") {
+      C02total = datavaluekm + datavaluefreq * 0.035;
+    }
+    return C02total;
+  };
+
   const addImageToBoard1 = (id) => {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard1((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
 
@@ -403,16 +403,18 @@ function Calendar() {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard2((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
   const addImageToBoard3 = (id) => {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard3((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
 
@@ -420,16 +422,18 @@ function Calendar() {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard4((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
   const addImageToBoard5 = (id) => {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard5((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
 
@@ -437,16 +441,18 @@ function Calendar() {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard6((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
   const addImageToBoard7 = (id) => {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard7((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
 
@@ -454,16 +460,18 @@ function Calendar() {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard8((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
   const addImageToBoard9 = (id) => {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard9((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
 
@@ -471,16 +479,18 @@ function Calendar() {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard10((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
   const addImageToBoard11 = (id) => {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard11((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
 
@@ -488,15 +498,16 @@ function Calendar() {
     const picture = pictureList.find((picture) => id === picture.id);
     const datavaluekm = parseFloat(picture.datavaluekm);
     const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard12((board) => [...board, picture]);
-    setCount((prevCount) => prevCount + datavaluekm + datavaluefreq);
+    setCount((prevCount) => prevCount + C02total);
   };
 
 
-  function SemesterBlock(props) {
+  function CalendarBlock(props) {
     return (
       <div
-        id="SemesterBlock"
+        id="CalendarBlock"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
@@ -510,10 +521,10 @@ function Calendar() {
     );
   }
 
-  function Semester(props) {
+  function Month(props) {
     return (
       <div id={props.id} style={{ display: "flex", flexDirection: "column" }}>
-        <div className="title" style={{ flexGrow: 1 }}>
+        <div className="title" style={{ flexGrow: 0, minHeight: "25px", textAlign: "center", fontWeight: "bold", fontSize: "15px" }}>
           {props.title}
         </div>
         {props.children}
@@ -523,20 +534,21 @@ function Calendar() {
 
   return (
     <div style={{ color: "#3366ff", fontFamily: "arial" }} align="center">
-      {showPopup && (
+      {showPopupEnter && (
         <div className="popup-overlay">
-          <Popup handleClose={() => setShowPopup(false)} />
+          <PopupEnter handleClose={() => setShowPopupEnter(false)} />
         </div>
       )}
       <div>
-        Total CO2 emissions : <span id="totalCount">{count}</span>KG / 2500KG
-        (national average per person per year)
+        <span style={{ fontSize: '16px', fontWeight: 'bold' }}>Total CO2 emissions : </span>
+        <span id="totalCount" style={{ fontSize: '16px', fontWeight: 'bold' }}>{count.toLocaleString()}</span>
+        <span style={{ fontSize: '16px', fontWeight: 'bold' }}>KG / 2,500KG </span>
         <br />
-        <progress value={count} max="2500"></progress>
+        <progress value={count} max="2500" className={count > 2500 ? "exceeded" : ""}></progress>
       </div>
       <div className="container">
-        <SemesterBlock>
-          <Semester id="jan" title="January">
+        <CalendarBlock>
+          <Month id="jan" title="January">
             <div className="Board BoardColumn" ref={drop1}>
               {board1.map((picture) => {
                 return <Picture
@@ -551,8 +563,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="feb" title="February">
+          </Month>
+          <Month id="feb" title="February">
             <div className="Board BoardColumn" ref={drop2}>
               {board2.map((picture) => {
                 return <Picture
@@ -567,8 +579,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="mar" title="March" >
+          </Month>
+          <Month id="mar" title="March" >
             <div className="Board BoardColumn" ref={drop3}>
               {board3.map((picture) => {
                 return <Picture
@@ -583,8 +595,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="apr" title="April" >
+          </Month>
+          <Month id="apr" title="April" >
             <div className="Board BoardColumn" ref={drop4}>
               {board4.map((picture) => {
                 return <Picture
@@ -599,8 +611,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="may" title="May" >
+          </Month>
+          <Month id="may" title="May" >
             <div className="Board BoardColumn" ref={drop5}>
               {board5.map((picture) => {
                 return <Picture
@@ -615,8 +627,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="jun" title="June" >
+          </Month>
+          <Month id="jun" title="June" >
             <div className="Board BoardColumn" ref={drop6}>
               {board6.map((picture) => {
                 return <Picture
@@ -631,8 +643,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="jul" title="July" >
+          </Month>
+          <Month id="jul" title="July" >
             <div className="Board BoardColumn" ref={drop7}>
               {board7.map((picture) => {
                 return <Picture
@@ -647,8 +659,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="aug" title="August" >
+          </Month>
+          <Month id="aug" title="August" >
             <div className="Board BoardColumn" ref={drop8}>
               {board8.map((picture) => {
                 return <Picture
@@ -663,8 +675,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="sep" title="September" >
+          </Month>
+          <Month id="sep" title="September" >
             <div className="Board BoardColumn" ref={drop9}>
               {board9.map((picture) => {
                 return <Picture
@@ -679,8 +691,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="oct" title="October" >
+          </Month>
+          <Month id="oct" title="October" >
             <div className="Board BoardColumn" ref={drop10}>
               {board10.map((picture) => {
                 return <Picture
@@ -695,8 +707,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="nov" title="November" >
+          </Month>
+          <Month id="nov" title="November" >
             <div className="Board BoardColumn" ref={drop11}>
               {board11.map((picture) => {
                 return <Picture
@@ -711,8 +723,8 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-          <Semester id="dec" title="December" >
+          </Month>
+          <Month id="dec" title="December" >
             <div className="Board BoardColumn" ref={drop12}>
               {board12.map((picture) => {
                 return <Picture
@@ -727,9 +739,9 @@ function Calendar() {
                   ;
               })}
             </div>
-          </Semester>
-        </SemesterBlock>
-        <div className="Pictures">
+          </Month>
+        </CalendarBlock>
+        <div className="Pictures">Transport options
           {pictureList.map((picture) => {
             return <Picture
               key={picture.id}
