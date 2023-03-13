@@ -118,74 +118,39 @@ const Sidebar = () => {
             <Typography
               variant="h6"
               color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+              sx={{ m: "20px 0 50px 20px" }}
             >
               Pages
             </Typography>
-            <Item
-              title="Challenge 1"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Challenge 2"
-              to="/calendar2030"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Test Your Knowledge"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="FAQ"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Data
-            </Typography>
-            <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Line Chart"
-              to="/line"
-              icon={<TimelineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Geography Chart"
-              to="/geography"
-              icon={<MapOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ marginBottom: '30px' }}>
+                <Item
+                  title="Challenge 1"
+                  to="/calendar"
+                  icon={<CalendarTodayOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </div>
+              <div style={{ marginBottom: '30px' }}>
+                <Item
+                  title="Challenge 2"
+                  to="/calendar2030"
+                  icon={<CalendarTodayOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </div>
+              <div>
+                <Item
+                  title="Test Your Knowledge"
+                  to="/form"
+                  icon={<PersonOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </div>
+            </div>
           </Box>
         </Menu>
       </ProSidebar>

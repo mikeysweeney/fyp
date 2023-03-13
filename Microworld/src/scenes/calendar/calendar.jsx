@@ -87,6 +87,11 @@ function Picture({ id, url, pictureList, setPictures }) {
     setHoveredValue(null);
   };
 
+  const handleDoubleClick = () => {
+    console.log("double click");
+
+  };
+
   const handlePopupClose = () => {
     setShowPopup(false);
   };
@@ -125,6 +130,7 @@ function Picture({ id, url, pictureList, setPictures }) {
         style={{ border: isDragging ? "5px solid black" : "0px" }}
         alt=""
         onContextMenu={handleContextMenu}
+        onDoubleClick={handleDoubleClick}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       />
@@ -414,7 +420,25 @@ function Calendar() {
     const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
     setBoard1((board) => [...board, picture]);
     setCount((prevCount) => prevCount + C02total);
+
+    // add an event listener for double-click events on the new image element
+    const newImageElement = document.getElementById(id);
+    newImageElement.addEventListener("dblclick", () => {
+      console.log("double-clicked")
+      removeImageFromBoard1(id);
+    });
   };
+
+  const removeImageFromBoard1 = (id) => {
+    // remove the image from the Board and update the CO2 count
+    const picture = board1.find((picture) => id === picture.id);
+    const datavaluekm = parseFloat(picture.datavaluekm);
+    const datavaluefreq = parseFloat(picture.datavaluefreq);
+    const C02total = calculateC02Total(id, datavaluekm, datavaluefreq);
+    setBoard1((board) => board.filter((picture) => id !== picture.id));
+    setCount((prevCount) => prevCount - C02total);
+  };
+
 
 
   const addImageToBoard2 = (id) => {

@@ -386,200 +386,232 @@ export const mockBarData = [
 export const mockPieData = [
   {
     id: "Personal Cars",
-    label: "Personal Cars",
-    value: 50,
+    label: "56%",
+    value: 56,
     color: "hsl(104, 70%, 50%)",
   },
   {
-    id: "Public Transport",
-    label: "Public Transport",
-    value: 10,
+    id: "Heavy goods vehicles",
+    label: "17%",
+    value: 17,
     color: "hsl(162, 70%, 50%)",
   },
   {
     id: "Flights",
-    label: "Flights",
-    value: 10,
+    label: "9%",
+    value: 9,
     color: "hsl(291, 70%, 50%)",
   },
   {
-    id: "Large Vehicles",
-    label: "Large Vehicles",
-    value: 20,
+    id: "Public transport",
+    label: "4%",
+    value: 4,
     color: "hsl(229, 70%, 50%)",
   },
   {
-    id: "Boats",
-    label: "Boats",
-    value: 10,
+    id: "Light goods vehicles",
+    label: "14%",
+    value: 14,
     color: "hsl(344, 70%, 50%)",
   },
 ];
 
-export const mockLineData = [
+export const mockPieData2 = [
   {
-    id: "IRELAND",
-    color: tokens("dark").greenAccent[500],
-    data: [
-      {
-        x: "Domestic Flight",
-        y: 101,
-      },
-      {
-        x: "Bus",
-        y: 75,
-      },
-      {
-        x: "boat",
-        y: 36,
-      },
-      {
-        x: "train",
-        y: 216,
-      },
-      {
-        x: "Int Flight",
-        y: 35,
-      },
-      {
-        x: "L Vehicle",
-        y: 236,
-      },
-      {
-        x: "S Vehicle",
-        y: 88,
-      },
-      {
-        x: "Truck",
-        y: 32,
-      },
-      {
-        x: "Ferry",
-        y: 281,
-      },
-      {
-        x: "Electric Car",
-        y: 1,
-      },
-      {
-        x: "Bike",
-        y: 35,
-      },
-      {
-        x: "others",
-        y: 14,
-      },
-    ],
+    id: "Power Generation",
+    label: "20%",
+    value: 20,
+    color: "hsl(0, 70%, 50%)",
   },
   {
-    id: "USA",
-    color: tokens("dark").blueAccent[300],
-    data: [
-      {
-        x: "Domestic Flight",
-        y: 212,
-      },
-      {
-        x: "Bus",
-        y: 190,
-      },
-      {
-        x: "boat",
-        y: 270,
-      },
-      {
-        x: "train",
-        y: 9,
-      },
-      {
-        x: "Int Flight",
-        y: 75,
-      },
-      {
-        x: "L Vehicle",
-        y: 175,
-      },
-      {
-        x: "S Vehicle",
-        y: 33,
-      },
-      {
-        x: "Truck",
-        y: 100,
-      },
-      {
-        x: "Ferry",
-        y: 0,
-      },
-      {
-        x: "Electric Car",
-        y: 87,
-      },
-      {
-        x: "Bike",
-        y: 299,
-      },
-      {
-        x: "others",
-        y: 251,
-      },
-    ],
+    id: "Transport",
+    label: "20%",
+    value: 20,
+    color: "hsl(60, 70%, 50%)",
   },
   {
-    id: "UK",
-    color: tokens("dark").redAccent[200],
-    data: [
-      {
-        x: "Domestic Flight",
-        y: 191,
-      },
-      {
-        x: "Bus",
-        y: 136,
-      },
-      {
-        x: "boat",
-        y: 91,
-      },
-      {
-        x: "train",
-        y: 190,
-      },
-      {
-        x: "Int Flight",
-        y: 211,
-      },
-      {
-        x: "L Vehicle",
-        y: 152,
-      },
-      {
-        x: "S Vehicle",
-        y: 189,
-      },
-      {
-        x: "Truck",
-        y: 152,
-      },
-      {
-        x: "Ferry",
-        y: 8,
-      },
-      {
-        x: "Electric Car",
-        y: 197,
-      },
-      {
-        x: "Bike",
-        y: 107,
-      },
-      {
-        x: "others",
-        y: 170,
-      },
-    ],
+    id: "Industry",
+    label: "20%",
+    value: 20,
+    color: "hsl(291, 70%, 50%)",
+  },
+  {
+    id: "Agriculture",
+    label: "33%",
+    value: 33,
+    color: "hsl(180, 70%, 50%)",
+  },
+  {
+    id: "Commercial & Public Services",
+    label: "7%",
+    value: 7,
+    color: "hsl(240, 70%, 50%)",
   },
 ];
+
+export const mockLineData = [{
+  id: "IRELAND", color: tokens("dark").greenAccent[500],
+  data: [
+    {
+      x: "Domestic Flight",
+      y: 110,
+    },
+    {
+      x: "Bus",
+      y: 85,
+    },
+    {
+      x: "Boat",
+      y: 45,
+    },
+    {
+      x: "Train",
+      y: 250,
+    },
+    {
+      x: "Int Flight",
+      y: 40,
+    },
+    {
+      x: "L Vehicle",
+      y: 260,
+    },
+    {
+      x: "S Vehicle",
+      y: 90,
+    },
+    {
+      x: "Truck",
+      y: 35,
+    },
+    {
+      x: "Ferry",
+      y: 290,
+    },
+    {
+      x: "Electric Car",
+      y: 5,
+    },
+    {
+      x: "Bike",
+      y: 40,
+    },
+    {
+      x: "Others",
+      y: 20,
+    },
+  ],
+},
+{
+  id: "USA",
+  color: tokens("dark").blueAccent[300],
+  data: [
+    {
+      x: "Domestic Flight",
+      y: 220,
+    },
+    {
+      x: "Bus",
+      y: 200,
+    },
+    {
+      x: "Boat",
+      y: 290,
+    },
+    {
+      x: "Train",
+      y: 15,
+    },
+    {
+      x: "Int Flight",
+      y: 85,
+    },
+    {
+      x: "L Vehicle",
+      y: 190,
+    },
+    {
+      x: "S Vehicle",
+      y: 35,
+    },
+    {
+      x: "Truck",
+      y: 105,
+    },
+    {
+      x: "Ferry",
+      y: 5,
+    },
+    {
+      x: "Electric Car",
+      y: 97,
+    },
+    {
+      x: "Bike",
+      y: 320,
+    },
+    {
+      x: "Others",
+      y: 260,
+    },
+  ],
+},
+{
+  id: "UK",
+  color: tokens("dark").redAccent[200],
+  data: [
+    {
+      x: "Domestic Flight",
+      y: 200,
+    },
+    {
+      x: "Bus",
+      y: 150,
+    },
+    {
+      x: "Boat",
+      y: 100,
+    },
+    {
+      x: "Train",
+      y: 220,
+    },
+    {
+      x: "Int Flight",
+      y: 230,
+    },
+    {
+      x: "L Vehicle",
+      y: 160,
+    },
+    {
+      x: "S Vehicle",
+      y: 200,
+    },
+    {
+      x: "Truck",
+      y: 160,
+    },
+    {
+      x: "Ferry",
+      y: 10,
+    },
+    {
+      x: "Electric Car",
+      y: 200,
+    },
+    {
+      x: "Bike",
+      y: 120,
+    },
+    {
+      x: "Others",
+      y: 190,
+    },
+  ],
+},
+];
+
 
 export const mockGeographyData = [
   {
