@@ -141,15 +141,6 @@ const Sidebar = () => {
                   setSelected={setSelected}
                 />
               </div>
-              <div>
-                <Item
-                  title="Test Your Knowledge"
-                  to="/form"
-                  icon={<PersonOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              </div>
             </div>
           </Box>
         </Menu>
