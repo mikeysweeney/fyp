@@ -45,7 +45,7 @@ img {
 
 .BoardColumn {
   width: 100%;
-  min-height: 200px;
+  min-height: 400px;
 }
 
 .BoardColumn:last-child {

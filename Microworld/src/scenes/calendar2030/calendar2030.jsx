@@ -8,7 +8,7 @@ function PopupEnter({ handleClose }) {
   return (
     <div className="popupenter">
       <div className="popup-inner">
-        <h2>Welcome to Transport Planner Part 2 (2030 + 2050 Goals)</h2>
+        <h2>Welcome to Transport Planner Challenge 2 (2030 + 2050 Goals)</h2>
         <p>
           This is a simulation where you can plan your transportation choices
           comparing to our national 2030 and 2050 goals!
@@ -174,36 +174,84 @@ function Calendar2030() {
   const [showPopupEnter, setShowPopupEnter] = useState(true);
   const [pictureList, setPictures] = useState([
     {
-      id: "Flight",
+      id: "Small Car",
+      url:
+        "http://www.clker.com/cliparts/C/3/h/q/U/G/blue-car-md.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Small Car"
+    },
+    {
+      id: "Medium Car",
+      url:
+        "http://www.clker.com/cliparts/7/b/8/2/1194985155394491109car_jamin_ellis_.svg.med.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Medium Diesel Car"
+    },
+    {
+      id: "Large Car",
+      url:
+        "http://www.clker.com/cliparts/0/4/c/1/11949850961169502818blazer_01.svg.med.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Large Car"
+    },
+    {
+      id: "Medium Haul Flight",
+      url:
+        "http://www.clker.com/cliparts/3/0/1/f/1208185302375994669markc09_Blue_biplane_with_red_wings_1.svg.med.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Medium Haul Flight"
+    },
+    {
+      id: "Long Haul Flight",
       url:
         "https://www.clker.com/cliparts/7/6/M/R/3/h/blue-airplane-pass-hi.png",
       datavaluekm: "0",
       datavaluefreq: "0",
-      title: "Flight"
+      title: "Long Haul Flight"
     },
     {
-      id: "Electric Car",
+      id: "Electric Car Irish Grid",
       url:
         "https://images.vexels.com/media/users/3/127596/isolated/preview/cc6b12c9c4b3bb5fac4e4a64255337ef-carro-el--trico-charging-svg-by-vexels.png",
       datavaluekm: "0",
       datavaluefreq: "0",
-      title: "Electric Car"
+      title: "Electric Car Irish Grid"
+    },
+    {
+      id: "Electric Car 2030 Grid",
+      url:
+        "http://www.clker.com/cliparts/U/I/x/w/F/i/blue-futuristic-car-md.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Electric Car 2030 Grid"
     },
     {
       id: "Ferry",
       url:
-        "http://clipart-library.com/image_gallery/603313.png",
+        "http://www.clker.com/cliparts/p/S/j/X/j/p/bateauvert-md.png",
       datavaluekm: "0",
       datavaluefreq: "0",
       title: "Ferry"
     },
     {
-      id: "Train",
+      id: "Electric Train",
       url:
         "http://www.clker.com/cliparts/U/e/x/P/y/H/train-dark-blue-hi.png",
       datavaluekm: "0",
       datavaluefreq: "0",
-      title: "Train"
+      title: "Electric Train"
+    },
+    {
+      id: "Diesel Train",
+      url:
+        "http://www.clker.com/cliparts/8/f/a/b/119542575474818773thalys_locomotive_peter__04.svg.med.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Diesel Train"
     },
     {
       id: "Bus",
@@ -214,41 +262,25 @@ function Calendar2030() {
       title: "Bus"
     },
     {
-      id: "Medium Petrol Car",
-      url:
-        "http://www.clipartbest.com/cliparts/aTe/ogx/aTeogx7qc.png",
-      datavaluekm: "0",
-      datavaluefreq: "0",
-      title: "Petrol Car"
-    },
-    {
-      id: "Medium Diesel Car",
-      url:
-        "http://www.clker.com/cliparts/1/3/f/6/11970920461654850943Harreck_Blue_Car.svg.med.png",
-      datavaluekm: "0",
-      datavaluefreq: "0",
-      title: "Diesel Car"
-    },
-    {
-      id: "Carpool",
+      id: "Carpool (2 people)",
       url:
         "http://www.clker.com/cliparts/0/1/f/7/11949846031382769588beach_trip_ganson.svg.med.png",
       datavaluekm: "0",
       datavaluefreq: "0",
-      title: "Carpool"
+      title: "Carpool (2 people)"
     },
     {
-      id: "Motorbike",
+      id: "Hybrid Car",
       url:
-        "http://www.clker.com/cliparts/e/6/4/c/11970861871447741097Gerald_G_Motorcycle_Clipart.svg.med.png",
+        "http://www.clker.com/cliparts/5/M/Q/r/e/S/eco-car-md.png",
       datavaluekm: "0",
       datavaluefreq: "0",
-      title: "Motorbike"
+      title: "Hybrid Car"
     },
     {
       id: "Tram",
       url:
-        "http://www.clker.com/cliparts/Y/R/t/S/J/8/station.svg.med.png",
+        "http://www.clker.com/cliparts/5/1/9/b/1240845884245780857Anonymous_aiga_rail_transportation.svg.med.png",
       datavaluekm: "0",
       datavaluefreq: "0",
       title: "Tram"
@@ -260,6 +292,14 @@ function Calendar2030() {
       datavaluekm: "0",
       datavaluefreq: "0",
       title: "Bike"
+    },
+    {
+      id: "Walking",
+      url:
+        "http://www.clker.com/cliparts/f/4/c/c/11949848821765342014protection_obligatoire__07.svg.med.png",
+      datavaluekm: "0",
+      datavaluefreq: "0",
+      title: "Walking"
     },
 
   ]);
@@ -378,38 +418,53 @@ function Calendar2030() {
 
   const calculateC02Total = (id, datavaluekm, datavaluefreq) => {
     let C02total = 0;
-    if (id === "Flight") {
+    if (id === "Medium Haul Flight") {
       C02total = datavaluekm * datavaluefreq * 0.255;
     }
-    if (id === "Electric Car") {
-      C02total = datavaluekm + datavaluefreq * 0.0553;
+    if (id === "Long Haul Flight") {
+      C02total = datavaluekm * datavaluefreq * 0.150;
     }
-    if (id === "Petrol Car") {
-      C02total = datavaluekm + datavaluefreq * 0.192;
+    if (id === "Electric Car Irish Grid") {
+      C02total = datavaluekm * datavaluefreq * 0.0553;
     }
-    if (id === "Diesel Car") {
-      C02total = datavaluekm + datavaluefreq * 0.171;
+    if (id === "Electric Car 2030 Grid") {
+      C02total = datavaluekm * datavaluefreq * 0.01;
     }
-    if (id === "Train") {
-      C02total = datavaluekm + datavaluefreq * 0.06;
+    if (id === "Large Car") {
+      C02total = datavaluekm * datavaluefreq * 0.280;
+    }
+    if (id === "Medium Car") {
+      C02total = datavaluekm * datavaluefreq * 0.192;
+    }
+    if (id === "Small Car") {
+      C02total = datavaluekm * datavaluefreq * 0.154;
+    }
+    if (id === "Electric Train") {
+      C02total = datavaluekm * datavaluefreq * 0.029;
+    }
+    if (id === "Diesel Train") {
+      C02total = datavaluekm * datavaluefreq * 0.06;
     }
     if (id === "Bus") {
-      C02total = datavaluekm + datavaluefreq * 0.105;
+      C02total = datavaluekm * datavaluefreq * 0.105;
     }
-    if (id === "Motorbike") {
-      C02total = datavaluekm + datavaluefreq * 0.103;
+    if (id === "Hybrid Car") {
+      C02total = datavaluekm * datavaluefreq * 0.75;
     }
     if (id === "Bicycle") {
-      C02total = datavaluekm + datavaluefreq * 0;
+      C02total = datavaluekm * datavaluefreq * 0;
     }
     if (id === "Walking") {
-      C02total = datavaluekm + datavaluefreq * 0;
+      C02total = datavaluekm * datavaluefreq * 0;
     }
     if (id === "Ferry") {
-      C02total = datavaluekm + datavaluefreq * 0.019;
+      C02total = datavaluekm * datavaluefreq * 0.019;
     }
     if (id === "Tram") {
-      C02total = datavaluekm + datavaluefreq * 0.035;
+      C02total = datavaluekm * datavaluefreq * 0.035;
+    }
+    if (id === "Carpool (2 people)") {
+      C02total = datavaluekm * datavaluefreq * 0.11;
     }
     return C02total;
   };

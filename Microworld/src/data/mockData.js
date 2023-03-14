@@ -319,67 +319,100 @@ export const mockTransactions = [
 
 export const mockBarData = [
   {
-    country: "2016",
-    "personal": 137,
-    "personalColor": "hsl(229, 70%, 50%)",
-    cargo: 96,
-    cargoColor: "hsl(296, 70%, 50%)",
-    buisnesses: 72,
-    buisnessesColor: "hsl(97, 70%, 50%)",
+    "id": "Bus",
+    "data": 104.71
   },
   {
-    country: "2017",
-    "personal": 55,
-    "personalColor": "hsl(307, 70%, 50%)",
-    cargo: 28,
-    cargoColor: "hsl(111, 70%, 50%)",
-    buisnesses: 58,
-    buisnessesColor: "hsl(273, 70%, 50%)",
+    "id": "Coach",
+    "data": 27.79
   },
   {
-    country: "2018",
-    "personal": 109,
-    "personalColor": "hsl(72, 70%, 50%)",
-    cargo: 23,
-    cargoColor: "hsl(96, 70%, 50%)",
-    buisnesses: 34,
-    buisnessesColor: "hsl(106, 70%, 50%)",
+    "id": "Diesel car",
+    "data": 85.305
   },
   {
-    country: "2019",
-    "personal": 133,
-    "personalColor": "hsl(257, 70%, 50%)",
-    cargo: 52,
-    cargoColor: "hsl(326, 70%, 50%)",
-    buisnesses: 43,
-    buisnessesColor: "hsl(110, 70%, 50%)",
+    "id": "Domestic flight",
+    "data": 254.93
   },
   {
-    country: "2020",
-    "personal": 81,
-    "personalColor": "hsl(190, 70%, 50%)",
-    cargo: 80,
-    cargoColor: "hsl(325, 70%, 50%)",
-    buisnesses: 112,
-    buisnessesColor: "hsl(54, 70%, 50%)",
+    "id": "Eurostar",
+    "data": 5.97
   },
   {
-    country: "2021",
-    "personal": 66,
-    "personalColor": "hsl(208, 70%, 50%)",
-    cargo: 111,
-    cargoColor: "hsl(334, 70%, 50%)",
-    buisnesses: 167,
-    buisnessesColor: "hsl(182, 70%, 50%)",
+    "id": "Ferry",
+    "data": 129.518
   },
   {
-    country: "2022",
-    "personal": 80,
-    "personalColor": "hsl(87, 70%, 50%)",
-    cargo: 47,
-    cargoColor: "hsl(141, 70%, 50%)",
-    buisnesses: 158,
-    buisnessesColor: "hsl(224, 70%, 50%)",
+    "id": "Large car (diesel)",
+    "data": 209.47
+  },
+  {
+    "id": "Large car (hybrid)",
+    "data": 131.77
+  },
+  {
+    "id": "Large car (petrol)",
+    "data": 282.95
+  },
+  {
+    "id": "Light rail and tram",
+    "data": 35.08
+  },
+  {
+    "id": "London Underground",
+    "data": 30.84
+
+  },
+  {
+    "id": "Business class flight)",
+    "data": 434.46
+  },
+];
+
+export const mockBarData2 = [
+  {
+    "id": "China",
+    "data": 12142
+  },
+  {
+    "id": "United States",
+    "data": 5706
+  },
+  {
+    "id": "India",
+    "data": 2225
+  },
+  {
+    "id": "Russia",
+    "data": 1649
+  },
+  {
+    "id": "Japan",
+    "data": 1262
+  },
+  {
+    "id": "Brazil",
+    "data": 564
+  },
+  {
+    "id": "Canada",
+    "data": 559
+  },
+  {
+    "id": "Germany",
+    "data": 541
+  },
+  {
+    "id": "South Korea",
+    "data": 524
+  },
+  {
+    "id": "Iran",
+    "data": 492
+  },
+  {
+    "id": "Ireland",
+    "data": 19
   },
 ];
 
