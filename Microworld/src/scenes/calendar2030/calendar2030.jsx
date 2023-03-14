@@ -594,6 +594,175 @@ function Calendar2030() {
 
   };
 
+  const removeImageFromBoard1 = () => {
+    const lastPicture = board1[board1.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard1(board1.slice(0, board1.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick1 = () => {
+    if (board1.length > 0) {
+      const id = board1[board1.length - 1].id;
+      removeImageFromBoard1(id);
+    }
+  };
+
+  const removeImageFromBoard2 = () => {
+    const lastPicture = board2[board2.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard2(board2.slice(0, board2.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick2 = () => {
+    if (board2.length > 0) {
+      const id = board2[board2.length - 1].id;
+      removeImageFromBoard2(id);
+    }
+  };
+
+  const removeImageFromBoard3 = () => {
+    const lastPicture = board3[board3.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard3(board3.slice(0, board3.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick3 = () => {
+    if (board3.length > 0) {
+      const id = board3[board3.length - 1].id;
+      removeImageFromBoard3(id);
+    }
+  };
+
+  const removeImageFromBoard4 = () => {
+    const lastPicture = board4[board4.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard4(board4.slice(0, board4.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick4 = () => {
+    if (board4.length > 0) {
+      const id = board4[board4.length - 1].id;
+      removeImageFromBoard4(id);
+    }
+  };
+
+  const removeImageFromBoard5 = () => {
+    const lastPicture = board5[board5.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard5(board5.slice(0, board5.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick5 = () => {
+    if (board5.length > 0) {
+      const id = board5[board5.length - 1].id;
+      removeImageFromBoard5(id);
+    }
+  };
+
+  const removeImageFromBoard6 = () => {
+    const lastPicture = board6[board6.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard6(board6.slice(0, board6.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick6 = () => {
+    if (board6.length > 0) {
+      const id = board6[board6.length - 1].id;
+      removeImageFromBoard6(id);
+    }
+  };
+
+  const removeImageFromBoard7 = () => {
+    const lastPicture = board7[board7.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard7(board7.slice(0, board7.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick7 = () => {
+    if (board7.length > 0) {
+      const id = board7[board7.length - 1].id;
+      removeImageFromBoard7(id);
+    }
+  };
+
+  const removeImageFromBoard8 = () => {
+    const lastPicture = board8[board8.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard8(board8.slice(0, board8.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick8 = () => {
+    if (board8.length > 0) {
+      const id = board8[board8.length - 1].id;
+      removeImageFromBoard8(id);
+    }
+  };
+
+  const removeImageFromBoard9 = () => {
+    const lastPicture = board9[board9.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard9(board9.slice(0, board9.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick9 = () => {
+    if (board9.length > 0) {
+      const id = board9[board9.length - 1].id;
+      removeImageFromBoard9(id);
+    }
+  };
+
+  const removeImageFromBoard10 = () => {
+    const lastPicture = board10[board10.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard10(board10.slice(0, board10.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick10 = () => {
+    if (board10.length > 0) {
+      const id = board10[board10.length - 1].id;
+      removeImageFromBoard10(id);
+    }
+  };
+
+  const removeImageFromBoard11 = () => {
+    const lastPicture = board11[board11.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard11(board11.slice(0, board11.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick11 = () => {
+    if (board11.length > 0) {
+      const id = board11[board11.length - 1].id;
+      removeImageFromBoard11(id);
+    }
+  };
+
+  const removeImageFromBoard12 = () => {
+    const lastPicture = board12[board12.length - 1];
+    const datavaluekm = parseFloat(lastPicture.datavaluekm);
+    setBoard12(board12.slice(0, board12.length - 1));
+    setCount(count => count - calculateC02Total(lastPicture.id, datavaluekm, parseFloat(lastPicture.datavaluefreq)));
+  };
+
+  const handleRemoveClick12 = () => {
+    if (board12.length > 0) {
+      const id = board12[board12.length - 1].id;
+      removeImageFromBoard12(id);
+    }
+  };
+
+
 
   function CalendarBlock(props) {
     return (
@@ -613,10 +782,193 @@ function Calendar2030() {
   }
 
   function Month(props) {
+    const { id, title } = props;
+
+    let button;
+    if (id === "jan") {
+      button = (
+        <button
+          onClick={handleRemoveClick1}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "feb") {
+      button = (
+        <button
+          onClick={handleRemoveClick2}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "mar") {
+      button = (
+        <button
+          onClick={handleRemoveClick3}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    }
+    else if (id === "apr") {
+      button = (
+        <button
+          onClick={handleRemoveClick4}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "may") {
+      button = (
+        <button
+          onClick={handleRemoveClick5}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "jun") {
+      button = (
+        <button
+          onClick={handleRemoveClick6}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "jul") {
+      button = (
+        <button
+          onClick={handleRemoveClick7}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "aug") {
+      button = (
+        <button
+          onClick={handleRemoveClick8}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "sep") {
+      button = (
+        <button
+          onClick={handleRemoveClick9}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "oct") {
+      button = (
+        <button
+          onClick={handleRemoveClick10}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "nov") {
+      button = (
+        <button
+          onClick={handleRemoveClick11}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    } else if (id === "dec") {
+      button = (
+        <button
+          onClick={handleRemoveClick12}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "15px",
+          }}
+        >
+          &#x21B6;
+        </button>
+      );
+    }
+
     return (
-      <div id={props.id} style={{ display: "flex", flexDirection: "column" }}>
-        <div className="title" style={{ flexGrow: 0, minHeight: "25px", textAlign: "center", fontWeight: "bold", fontSize: "15px" }}>
-          {props.title}
+      <div id={id} style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          className="title"
+          style={{
+            flexGrow: 0,
+            minHeight: "25px",
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: "15px"
+          }}
+        >
+          {title} {button}
         </div>
         {props.children}
       </div>
@@ -631,6 +983,24 @@ function Calendar2030() {
         </div>
       )}
       <div style={{ fontSize: '18px', fontWeight: 'bold' }}>
+        <div style={{ border: "2px solid blue", width: "1000px", margin: "auto", padding: "10px", fontWeight: 'normal', fontSize: '14px' }}>
+          <span style={{ textDecoration: "underline" }}>Instructions:</span>
+          <br />
+          <br />
+          <span style={{ fontWeight: 'bolder' }}>1. Select your goal:</span> Choose from the <span style={{ textDecoration: "underline" }}>dropdown menu</span> the goal you want to set your carbon emissions goal to
+          <br />
+          <span style={{ fontWeight: 'bolder' }}>2. Find your transport:</span> <span style={{ textDecoration: "underline" }}>Hover your mouse</span> over images to see each transport type.
+          <br />
+          <span style={{ fontWeight: 'bolder' }}>3. Enter your data:</span> <span style={{ textDecoration: "underline" }}>Right click images</span> on right to enter the data for each travel type.
+          <br />
+          <span style={{ fontWeight: 'bolder' }}>4. Place your images:</span> <span style={{ textDecoration: "underline" }}>Drag your image</span> to the month you travelled, you can also drag trips between months.
+          <br />
+          <span style={{ fontWeight: 'bolder' }}> 5. Undo your data:</span> <span style={{ textDecoration: "underline" }}>Click the undo button on the month</span> to remove your most recent transport choice.
+          <br />
+          <span style={{ fontWeight: 'bolder' }}>6.Track your progress:</span> <span style={{ textDecoration: "underline" }}>The progress bar</span> will display your progress towards your selected goal. If your emissions exceed your goal, you won't be allowed to add any more.
+        </div>
+        <br />
+        <br />
         Select your goal
         <br />
         <label htmlFor="maxValue"></label>
@@ -639,6 +1009,7 @@ function Calendar2030() {
           <option value="450">2050 Goals</option>
           <option value="100">Net Zero</option>
         </select>
+        <br />
         <br />
         <span style={{ fontSize: '16px', fontWeight: 'bold' }}>Total CO2 emissions : </span>
         <span id="totalCount" style={{ fontSize: '16px', fontWeight: 'bold' }}>{count.toLocaleString()}</span>
